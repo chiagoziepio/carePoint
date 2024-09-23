@@ -53,25 +53,38 @@ const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <div
-      className="p-[10px]"
+      className="pl-[10px] pt-[10px]"
       style={{
         width: isCollapsed ? 80 : 267,
         transition: "width 0.2s ease-in-out",
         height: "100%",
-        background : "#fff"
+        background: "#fff",
       }}
     >
       <div>
-        <div className="ml-[30px] w-fit h-fit mb-[30px] cursor-pointer">
-          <CiMenuFries size={30} onClick={()=> setIsCollapsed(!isCollapsed)} />
+        <div className={`flex items-center gap-x-[13px] justify-between mb-[30px] ${isCollapsed && "justify-center"}`}>
+          <div className={`w-fit  cursor-pointer `}>
+            <CiMenuFries
+              size={30}
+              onClick={() => setIsCollapsed(!isCollapsed)}
+            />
+          </div>
+          {!isCollapsed && 
+          <div className="flex items-center">
+            <img src="/assests/logo.svg" alt="" />
+            <p>CarePoint</p>
+          </div>
+          
+          }
         </div>
+
         <div className="flex flex-col gap-2 items-start w-full">
           <Menu
             mode="inline"
             theme="light"
             items={Links}
             inlineCollapsed={isCollapsed}
-            className="ml-[-10px]"
+            className="ml-[-10px] "
           />
         </div>
       </div>
