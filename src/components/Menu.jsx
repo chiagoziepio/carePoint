@@ -72,7 +72,6 @@ const Menus = () => {
           {!isCollapsed && 
           <div className="flex items-center">
             <img src="/assests/logo.svg" alt="" />
-            <p>CarePoint</p>
           </div>
           
           }

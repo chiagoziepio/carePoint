@@ -19,5 +19,5 @@
   <!-- Point Marker -->
   <circle class="point" cx="100" cy="50" r="20" />
   <!-- Text -->
- <!--  <text x="50%" y="190" text-anchor="middle" class="text">CarePoint</text> -->
+  <text x="50%" y="190" text-anchor="middle" class="text">CarePoint</text>
 </svg>
