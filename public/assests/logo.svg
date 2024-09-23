@@ -1,0 +1,23 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 200 200"
+>
+  <defs>
+    <style>
+      .heart { fill: #e63946; }
+      .point { fill: #334f39; }
+      .text { fill: #000; font-family: 'Arial', sans-serif; font-size: 24px; }
+    </style>
+  </defs>
+  <!-- Heart Shape -->
+  <path
+    class="heart"
+    d="M100 182s-25-17-40-33c-15-16-29-34-40-54C0 78 24 50 50 65c20 12 24 30 50 30s30-18 50-30c26-15 50-2 50 30-11 20-25 38-40 54-15 16-40 33-40 33z"
+  />
+  <!-- Point Marker -->
+  <circle class="point" cx="100" cy="50" r="20" />
+  <!-- Text -->
+ <!--  <text x="50%" y="190" text-anchor="middle" class="text">CarePoint</text> -->
+</svg>

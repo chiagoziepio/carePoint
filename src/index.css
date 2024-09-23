@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: "Outfit", sans-serif;
+    min-height: 100vh;
+    padding: 10px;
+    background-color: #F8F9FD;
+}
+
+#root{
+  min-height: 100vh;
+    display: flex;
+    width: 100vw;
+  
+}
+.outfit-bold {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+  }
+.outfit-medium {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+.outfit-small {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style:normal;
+  }
+
+.ant-btn-primary {
+    background-color: #334f39; 
+    border-color: #334f39; 
+  }
+  
+  .ant-link {
+    color: #334f39; 
+  }
+  .ant-menu-light.ant-menu-root.ant-menu-inline, 
+  .ant-menu-light.ant-menu-root.ant-menu-vertical{
+    border-inline-end : none;
+  
+  }
+  .ant-menu-inline-collapsed >.ant-menu-item{
+    padding-inline: 16px;
+  }
+  .ant-menu .ant-menu-item a::before{
+   
+  }
