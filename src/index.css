@@ -64,3 +64,9 @@ body {
 .preset1{
   margin-top: 80px;
 }
+
+@media (max-width : 620px){
+  .res{
+   /*  width: 97% !important; */
+  }
+}

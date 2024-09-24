@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <div className='h-full w-full flex flex-col justify-between'>
         <Navbar/>
-        <div className='flex-grow  flex gap-x-[20px] w-full relative'>
+        <div className='flex-grow  flex gap-x-[20px]  relative'>
             <Menu className=""/>
             <Outlet/>
         </div>

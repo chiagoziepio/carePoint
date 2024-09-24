@@ -49,7 +49,7 @@ const DoctorsOfTheWeek = () => {
     <div className="mt-[70px]">
       <div>
         <div className="flex flex-col items-center gap-y-[20px]">
-          <h3 className="outfit-medium text-[40px] leading-[30px]">
+          <h3 className="outfit-medium md:text-[40px] text-[30px] md:leading-[30px]">
             Doctors Of The Week
           </h3>
           <p className="text-[17px] outifit-medium">Based on patients poll</p>
@@ -73,18 +73,18 @@ const DoctorsOfTheWeek = () => {
         </div>
         <div className=" bg-bg-banner mt-[150px] h-fit flex justify-evenly rounded-[12px]">
           <div className="flex justify-between h-fit flex-wrap md:flex-nowrap  ">
-            <div className="flex flex-col justify-center items-center mt-[5%] w-[50%]">
-              <h3 className="outfit-bold text-[3rem] leading-[90px] text-white">
+            <div className="flex flex-col justify-center items-center mt-[5%] w-full md:w-[50%]">
+              <h3 className="outfit-bold md:text-[3rem] text-[20px] md:leading-[90px] text-white">
                 Book Appointment <br /> with Over 100+ Doctors
               </h3>
-              <div className="w-full flex justify-start">
-              <button className="w-[214px] hover:rounded-none transition-rounded ease-in duration-700 h-[57px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
+              <div className="w-full flex justify-center md:justify-start">
+              <button className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
                 create account
               </button>
               </div>
               
             </div>
-            <div className="mt-[-90px]">
+            <div className="md:mt-[-90px]">
               <img src="/assests/appointment.svg" alt="" />
             </div>
           </div>

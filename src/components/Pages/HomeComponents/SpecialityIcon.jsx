@@ -42,12 +42,12 @@ const SpecialityIcon = () => {
           <h3 className="outfit-medium text-[27px] leading-[20px] text-center ">
             Find by Speciality
           </h3>
-          <p className="text-[18px] w-[500px] text-center my-[10px]">
+          <p className="text-[18px] md:w-[500px] text-center my-[10px]">
             Simply browse our list of tranied and skilled doctors to book an
             appointment hassle-free
           </p>
         </div>
-        <div className="flex gap-[15px] justify-center mt-[50px]">
+        <div className="flex gap-[15px] flex-wrap justify-center mt-[50px]">
         {speciality.map(sp =>(
             <div key={sp.id} className="flex items-center flex-col gap-y-[15px] cursor-pointer">
                 <Avatar size={60} src= {sp.img}/>

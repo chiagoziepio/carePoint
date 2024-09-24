@@ -53,7 +53,7 @@ const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <div
-      className="pl-[10px] pt-[10px] sticky top-0 left-0"
+      className="pl-[10px] pt-[10px] sticky hidden md:block top-0 left-0"
       style={{
         width: isCollapsed ? 80 : 267,
         transition: "width 0.2s ease-in-out",

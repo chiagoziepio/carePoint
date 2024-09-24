@@ -5,41 +5,39 @@ import DoctorsOfTheWeek from "./HomeComponents/DoctorsOfTheWeek";
 
 const Home = () => {
   return (
-    <div className="h-full flex-grow pr-[20px]">
-      <div className="mt-[40px] mr-[40px]">
-        <div className="bg-bg-banner md:w-full h-[557px] rounded-[12px] flex justify-between">
-          <div className=" w-[50%] flex flex-col items-center justify-center pl-[10%]">
-            <h3 className="leading-[50px] outfit-bold text-[40px] text-[white]">
+    <div className="h-full flex-grow res p-[10px] ">
+      <div>
+        <div className="bg-bg-banner w-full rounded-[12px] min-h-[639px] md:min-h-[519px] flex flex-col-reverse md:flex-row md:justify-center md:items-center justify-evenly">
+          <div className="p-[10px] md:ml-[100px]">
+            <h3 className="outfit-bold text-white text-[25px] md:text-[40px] md:leading-[50px]">
+              {" "}
               CarePoint saddled with the responsibilty of ensuring your wellness
             </h3>
-            <div className="w-full mt-[30px] flex gap-x-[15px] items-center">
-              <div className="w-[25%] cursor-pointer">
-                <img src="/assests/testimonals.svg" alt="" />
+            <div className="hidden md:block mt-[30px]">
+              <div className="flex gap-x-[20px] ">
+                <img
+                  src="/assests/testimonals.svg"
+                  alt=""
+                  className="cursor-pointer"
+                />
+                <p className="text-white">
+                  Thousands of Users sing our <br />
+                  Browse through our list of qualified doctors to book an
+                  appoint
+                </p>
               </div>
-              <p className="text-white ">
-                Satifised patient singing our praise <br />
-                Simply browse through our list of qualifed doctors and book an
-                appointment
-              </p>
             </div>
-            <div className="w-full mt-[20px]">
-              <button className="w-[260px] group h-[63px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
-                Book appoinntment{" "}
-                <span>
-                  <MdArrowRightAlt
-                    size={20}
-                    className="group-hover:translate-x-[10px]"
-                  />
-                </span>
-              </button>
-            </div>
+
+            <button className="group mt-[30px] bg-white h-fit md:h-[64px] md:w-[213px] justify-center items-center p-[5px] w-fit flex gap-x-[10px] rounded-[10px] md:rounded-[30px] cursor-pointer">
+              Book Appointment <MdArrowRightAlt className=" group-hover:translate-x-[10px] transition-transform duration-500" />
+            </button>
           </div>
-          <div className="h-full">
-            <img src="/assests/banner.svg" alt="" className="h-full" />
+          <div className="">
+            <img className="" src="/assests/banner.svg" alt="" />
           </div>
         </div>
-        <div className="mt-[30px] ">
-          <SpecialityIcon />
+        <div className="mt-[60px]">
+          <SpecialityIcon/>
           <DoctorsOfTheWeek/>
         </div>
       </div>
