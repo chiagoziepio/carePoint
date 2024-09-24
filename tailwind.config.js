@@ -9,7 +9,8 @@ module.exports = {
       backgroundColor: {
         'primary-bg-color': '#334f38', 
         'bg-banner' : '#70cca1',
-        'bg-light' : '#EAEFFF'
+        'bg-light' : '#EAEFFF',
+        'bg-doc' : '#C9D8FF'
       },
       textColor:{
         'primary-color' : '#334f37'
