@@ -6,7 +6,7 @@ import DoctorsOfTheWeek from "./HomeComponents/DoctorsOfTheWeek";
 const Home = () => {
   return (
     <div className="h-full flex-grow pr-[20px]">
-      <div className="mt-[80px] ml-[100px] mr-[40px]">
+      <div className="mt-[40px] mr-[40px]">
         <div className="bg-bg-banner md:w-full h-[557px] rounded-[12px] flex justify-between">
           <div className=" w-[50%] flex flex-col items-center justify-center pl-[10%]">
             <h3 className="leading-[50px] outfit-bold text-[40px] text-[white]">
