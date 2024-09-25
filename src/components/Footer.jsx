@@ -21,7 +21,7 @@ const Footer = () => {
           <div className="flex md:justify-evenly w-full flex-wrap gap-y-[15px] md:flex-nowrap ">
             <div className="flex flex-col w-full md-w-fit">
               <h4 className="outfit-medium text-[18px] mb-[50px]">COMPANY</h4>
-              <Link className="text-[18px] outfit-small">Home</Link>
+              <Link to={"/"} className="text-[18px] outfit-small">Home</Link>
               <Link className="text-[18px] outfit-small">About Us</Link>
               <Link className="text-[18px] outfit-small">Contact</Link>
             </div>

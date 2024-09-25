@@ -57,6 +57,9 @@ body {
   color: black;
 }
 
+.custom-select .ant-select-focused .ant-select-selector{
+ border:1px solid #334f39 !important;
+}
 .preset{
   margin: 0 40px 0 100px;
   padding-right: 20px;

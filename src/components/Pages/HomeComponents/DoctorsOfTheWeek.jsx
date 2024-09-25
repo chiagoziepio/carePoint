@@ -1,6 +1,6 @@
 import React from "react";
 
-const doctorsOfTheWeek = [
+export const doctorsOfTheWeek = [
   {
     id: 1,
     img: "/assests/doctors/img1.png",
