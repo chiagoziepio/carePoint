@@ -11,7 +11,7 @@ const About = () => {
           <div className="md:w-[30%] md:h-[300px]">
             <img src="/assests/about_image.svg" alt="" className="w-full h-full" />
           </div>
-          <div className="outfit-medium text-[18px] md:w-[60%]">
+          <div className="text-[18px] md:w-[60%]">
             <p>
               Welcome to CarePoint, your trusted partner in managing your
               healthcare needs conveniently and efficiently. At Prescripto, we
