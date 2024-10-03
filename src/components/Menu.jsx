@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Drawer, Menu } from "antd";
 import { NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
@@ -7,13 +7,12 @@ import { FaInfoCircle } from "react-icons/fa";
 import { MdOutlinePhoneCallback } from "react-icons/md";
 import { CiMenuFries } from "react-icons/ci";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDrawer } from "../Redux/features/PatientSlice/PatientSlice";
+import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 
 const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [user, setUser] = useState(null);
   const isDrawerOpen = useSelector(
     (state) => state.PatientReducer.isDrawerOpen
   );
@@ -139,11 +138,7 @@ const Menus = () => {
                   <span>
                     <MdLogout size={22} />
                   </span>
-                  <p
-                    className={`outfit-medium text-[17px]`}
-                  >
-                    Logout
-                  </p>
+                  <p className={`outfit-medium text-[17px]`}>Logout</p>
                 </div>
               )}
             </Drawer>

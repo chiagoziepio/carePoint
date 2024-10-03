@@ -10,11 +10,13 @@ import Store, { persistor } from "./Redux/AppStore/Store.js";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={Store}>
-      <Router>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
-      </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
+        </Router>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MdNotifications } from "react-icons/md";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDrawer } from "../Redux/features/PatientSlice/PatientSlice";
+import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isDroppedDown, setIsIsDroppedDown] = useState(false);

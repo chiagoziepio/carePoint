@@ -6,13 +6,5 @@ export const AppApi = createApi({
     baseQuery : fetchBaseQuery({
         baseUrl: "http://localhost:3001/api"
     }),
-    endpoints: (builder)=>({
-        userSignup: builder.mutation({
-            query: (values) => ({
-              url: "user/register",
-              method: "POST",
-              body: values,
-            }),
-          }),
-    })
+    endpoints: (builder)=> ({})
 })
