@@ -4,6 +4,8 @@ import Home from "./components/Pages/Home";
 import AllDoctors from "./components/Pages/AllDoctors";
 import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
+import Login from "./components/Pages/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/doctors" element={<AllDoctors />} />
           <Route path = "/about" element={<About/>}/>
           <Route path = "/contact" element={<Contact/>}/>
+          <Route path = "/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
         </Route>
       </Routes>
     </main>
