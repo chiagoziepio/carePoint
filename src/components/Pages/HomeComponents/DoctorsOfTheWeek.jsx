@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 export const doctorsOfTheWeek = [
   {
@@ -78,11 +78,10 @@ const DoctorsOfTheWeek = () => {
                 Book Appointment <br /> with Over 100+ Doctors
               </h3>
               <div className="w-full flex justify-center md:justify-start">
-              <button className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
-                create account
-              </button>
+                <button className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
+                  <Link to={"/register"}>create account</Link>
+                </button>
               </div>
-              
             </div>
             <div className="md:mt-[-90px]">
               <img src="/assests/appointment.svg" alt="" />
