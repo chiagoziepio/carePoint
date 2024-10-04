@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Drawer, Menu } from "antd";
+import { Drawer, Menu, message } from "antd";
 import { NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaUserDoctor } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
+import { usePatientLogoutMutation } from "../Redux/features/Patients/PatientApi";
 
 const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -17,7 +18,16 @@ const Menus = () => {
     (state) => state.PatientReducer.isDrawerOpen
   );
   const patient = useSelector((state) => state.PatientReducer.patient);
+  const [patientLogout] = usePatientLogoutMutation();
 
+  const handlePatientLogout = async () => {
+    if (!patient._id) return;
+    try {
+      await patientLogout({ _id: patient._id }).unwrap();
+    } catch (error) {
+      message.error(error.data.msg);
+    }
+  };
   const Links = [
     {
       key: 1,
@@ -134,7 +144,12 @@ const Menus = () => {
                 ))}
               </ul>
               {patient && (
-                <div className="flex gap-x-[8px] items-center">
+                <div
+                  className="flex gap-x-[8px] items-center cursor-pointer"
+                  onClick={() => {
+                    handlePatientLogout(), dispatch(toggleDrawer());
+                  }}
+                >
                   <span>
                     <MdLogout size={22} />
                   </span>
@@ -157,7 +172,10 @@ const Menus = () => {
           </div>
         </div>
         {patient && (
-          <div className="flex gap-x-[8px] items-center">
+          <div
+            className="flex gap-x-[8px] items-center cursor-pointer"
+            onClick={handlePatientLogout}
+          >
             <span>
               <MdLogout size={22} />
             </span>

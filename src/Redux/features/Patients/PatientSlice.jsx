@@ -42,6 +42,12 @@ const PatientSlice = createSlice({
         Cookies.set("token", JSON.stringify(state.token), { expires: date });
       }
     );
+    builder.addMatcher(
+      patientApi.endpoints.patientLogout.matchFulfilled,
+      (state, action) => {
+        (state.patient = null), (state.token = action.payload.token);
+      }
+    );
   },
 });
 

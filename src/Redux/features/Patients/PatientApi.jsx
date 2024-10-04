@@ -17,9 +17,10 @@ export const patientApi = AppApi.injectEndpoints({
       }),
     }),
     patientLogout: builder.mutation({
-      query: () => ({
+      query: (_id) => ({
         url: "patient/logout",
         method: "POST",
+        body: _id,
       }),
     }),
   }),
