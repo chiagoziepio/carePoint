@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Drawer, Menu, message } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaUserDoctor } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
@@ -20,10 +20,12 @@ const Menus = () => {
   const patient = useSelector((state) => state.PatientReducer.patient);
   const [patientLogout] = usePatientLogoutMutation();
 
+  const navigate = useNavigate();
   const handlePatientLogout = async () => {
     if (!patient._id) return;
     try {
       await patientLogout({ _id: patient._id }).unwrap();
+      navigate("/login");
     } catch (error) {
       message.error(error.data.msg);
     }

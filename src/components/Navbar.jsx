@@ -1,15 +1,10 @@
 import { Avatar } from "antd";
-import React, { useState } from "react";
 import { MdNotifications } from "react-icons/md";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  const [isDroppedDown, setIsIsDroppedDown] = useState(false);
-  const isDrawerOpen = useSelector(
-    (state) => state.PatientReducer.isDrawerOpen
-  );
   const patient = useSelector((state) => state.PatientReducer.patient);
   const dispatch = useDispatch();
   return (
@@ -32,11 +27,17 @@ const Navbar = () => {
             </button>
           )}
 
-          {patient && <Avatar size={35} />}
+          {patient && (
+            <Link to={"/patient-dashboard"} className="cursor-pointer">
+              <Avatar size={35} src={patient ? patient.pic : ""} />
+            </Link>
+          )}
 
           {patient && (
             <div>
-              <MdNotifications size={30} />
+              <Link to={"/notification"} className="cursor-pointer">
+                <MdNotifications size={30} />
+              </Link>
             </div>
           )}
         </div>
