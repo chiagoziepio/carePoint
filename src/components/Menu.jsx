@@ -11,6 +11,7 @@ import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import { usePatientLogoutMutation } from "../Redux/features/Patients/PatientApi";
+import { MdAddToPhotos } from "react-icons/md";
 
 const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -73,6 +74,17 @@ const Menus = () => {
       ),
       path: "/contact",
       icon: <MdOutlinePhoneCallback size={22} />,
+      visible: true,
+    },
+    {
+      key: 5,
+      label: (
+        <NavLink to={"/admin-create-doctor"} className={""}>
+          Add Doctor
+        </NavLink>
+      ),
+      path: "/admin-create-doctor",
+      icon: <MdAddToPhotos size={22} />,
       visible: true,
     },
   ];

@@ -19,6 +19,9 @@ const PatientSlice = createSlice({
     toggleDrawer: (state) => {
       state.isDrawerOpen = state.isDrawerOpen ? false : true;
     },
+    tokenChecker: (state) => {
+      state.patient = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -51,6 +54,6 @@ const PatientSlice = createSlice({
   },
 });
 
-export const { toggleDrawer } = PatientSlice.actions;
+export const { toggleDrawer, tokenChecker } = PatientSlice.actions;
 
 export default PatientSlice.reducer;

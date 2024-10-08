@@ -3,6 +3,7 @@ import { AppApi } from "../Api/AppApi";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import PatientReducer from "../features/Patients/PatientSlice";
+import AdminReducer from "../features/Admin/AdminSlice";
 import {
   FLUSH,
   REHYDRATE,
@@ -26,6 +27,7 @@ const persistedPatientReducer = persistReducer(
 const Store = configureStore({
   reducer: {
     PatientReducer: persistedPatientReducer,
+    AdminReducer: AdminReducer,
     [AppApi.reducerPath]: AppApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
