@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 const Register = () => {
   const [userSignup, { isLoading }] = useUserSignupMutation();
   const patient = useSelector((state) => state.PatientReducer.patient);
+  const doctor = useSelector((state) => state.DoctorReducer.doctor);
   const navigate = useNavigate();
   useEffect(() => {
-    if (patient) {
+    if (patient || doctor) {
       return navigate(-1);
     }
   }, []);

@@ -4,7 +4,8 @@ import Menu from "./Menu";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-import { tokenChecker } from "../Redux/features/Patients/PatientSlice";
+//import { tokenChecker } from "../Redux/features/Patients/PatientSlice";
+import { trackUser } from "../Redux/Api/AppSlice";
 import { useDispatch } from "react-redux";
 
 const Layout = () => {
@@ -17,13 +18,13 @@ const Layout = () => {
   const checkToken = async () => {
     const token = getToken();
     if (token === null) {
-      dispatch(tokenChecker());
+      dispatch(trackUser(null));
     }
   };
   useEffect(() => {
     const interval = setInterval(() => {
       checkToken();
-    }, 500000);
+    }, 5000);
 
     return () => {
       clearInterval(interval);

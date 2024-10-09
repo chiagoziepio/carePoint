@@ -39,16 +39,17 @@ const PatientSlice = createSlice({
     builder.addMatcher(
       patientApi.endpoints.patientLogin.matchFulfilled,
       (state, action) => {
-        state.patient = action.payload.patient;
+        state.patient = action.payload.user;
         (state.token = action.payload.token),
-          (state.notification = action.payload.patient.notifications);
+          (state.notification = action.payload.user.notifications);
         Cookies.set("token", JSON.stringify(state.token), { expires: date });
       }
     );
     builder.addMatcher(
       patientApi.endpoints.patientLogout.matchFulfilled,
       (state, action) => {
-        (state.patient = null), (state.token = action.payload.token);
+        (state.patient = action.payload.patient),
+          (state.token = action.payload.token);
       }
     );
   },

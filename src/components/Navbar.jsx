@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  const patient = useSelector((state) => state.PatientReducer.patient);
+  const user = useSelector((state) => state.AppReducer.user);
   const dispatch = useDispatch();
   return (
     <div className="w-full sticky top-0 right-0 left-0 z-20">
@@ -21,19 +21,25 @@ const Navbar = () => {
           onClick={() => dispatch(toggleDrawer())}
         />
         <div className="flex gap-x-[20px] mr-[20px]">
-          {!patient && (
+          {!user && (
             <button className="bg-bg-banner text-white text-[14px] md:text-[17px] h-fit w-[100px] p-[7px] flex items-center justify-center rounded-[30px]">
               <Link to="/login">Login</Link>
             </button>
           )}
 
-          {patient && (
-            <Link to={"/patient-dashboard"} className="cursor-pointer">
-              <Avatar size={35} src={patient ? patient.pic : ""} />
+          {user && (
+            <Link
+              to={user.role === "doctor" ? "" : "/patient-dashboard"}
+              className="cursor-pointer"
+            >
+              <Avatar
+                size={35}
+                src={user.role === "doctor" ? user.doctorPic : user.pic}
+              />
             </Link>
           )}
 
-          {patient && (
+          {user && (
             <div>
               <Link to={"/notification"} className="cursor-pointer">
                 <MdNotifications size={30} />

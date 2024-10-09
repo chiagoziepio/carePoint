@@ -4,6 +4,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import PatientReducer from "../features/Patients/PatientSlice";
 import AdminReducer from "../features/Admin/AdminSlice";
+import DoctorReducer from "../features/Doctor/DoctorSlice";
+import AppReducer from "../Api/AppSlice";
 import {
   FLUSH,
   REHYDRATE,
@@ -18,16 +20,30 @@ const authPersistConfig = {
   storage,
   whitelist: ["patient", "notification", "token"],
 };
+const authPersistDocConfig = {
+  key: "doctorSlice",
+  storage,
+  whitelist: ["doctor", "notification", "token"],
+};
+const authPersistUserConfig = {
+  key: "AppSlice",
+  storage,
+  whitelist: ["user"],
+};
 
 const persistedPatientReducer = persistReducer(
   authPersistConfig,
   PatientReducer
 );
+const persistedDocReducer = persistReducer(authPersistDocConfig, DoctorReducer);
+const persistedUserReducer = persistReducer(authPersistUserConfig, AppReducer);
 
 const Store = configureStore({
   reducer: {
     PatientReducer: persistedPatientReducer,
     AdminReducer: AdminReducer,
+    DoctorReducer: persistedDocReducer,
+    AppReducer: persistedUserReducer,
     [AppApi.reducerPath]: AppApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

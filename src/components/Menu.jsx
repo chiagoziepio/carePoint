@@ -11,21 +11,27 @@ import { toggleDrawer } from "../Redux/features/Patients/PatientSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import { usePatientLogoutMutation } from "../Redux/features/Patients/PatientApi";
+import { useDoctorLogoutMutation } from "../Redux/features/Doctor/DoctorApi";
 import { MdAddToPhotos } from "react-icons/md";
-
+import { trackUser } from "../Redux/Api/AppSlice";
 const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isDrawerOpen = useSelector(
     (state) => state.PatientReducer.isDrawerOpen
   );
-  const patient = useSelector((state) => state.PatientReducer.patient);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.AppReducer.user);
   const [patientLogout] = usePatientLogoutMutation();
+  const [doctorLogout] = useDoctorLogoutMutation();
 
   const navigate = useNavigate();
-  const handlePatientLogout = async () => {
-    if (!patient._id) return;
+  const handleUserLogout = async () => {
+    if (!user._id) return;
     try {
-      await patientLogout({ _id: patient._id }).unwrap();
+      user.role === "doctor"
+        ? await doctorLogout({ _id: user._id }).unwrap()
+        : await patientLogout({ _id: user._id }).unwrap();
+      dispatch(trackUser(null));
       navigate("/login");
     } catch (error) {
       message.error(error.data.msg);
@@ -85,11 +91,10 @@ const Menus = () => {
       ),
       path: "/admin-create-doctor",
       icon: <MdAddToPhotos size={22} />,
-      visible: true,
+      visible: user && user.role === "admin",
     },
   ];
 
-  const dispatch = useDispatch();
   return (
     <div
       className="pl-[10px] pt-[10px] h-full hidden md:block top-0 left-0"
@@ -137,7 +142,7 @@ const Menus = () => {
                 </div>
               </div>
               <ul style={{ listStyleType: "none", padding: 0 }}>
-                {Links.map((link) => (
+                {Links.filter((link) => link.visible === true).map((link) => (
                   <li
                     key={link.key}
                     onClick={() => dispatch(toggleDrawer())}
@@ -157,11 +162,11 @@ const Menus = () => {
                   </li>
                 ))}
               </ul>
-              {patient && (
+              {user && (
                 <div
                   className="flex gap-x-[8px] items-center cursor-pointer"
                   onClick={() => {
-                    handlePatientLogout(), dispatch(toggleDrawer());
+                    handleUserLogout(), dispatch(toggleDrawer());
                   }}
                 >
                   <span>
@@ -177,7 +182,7 @@ const Menus = () => {
               inlineCollapsed={isCollapsed}
               className="ml-[-10px] hidden md:block "
             >
-              {Links.filter((link) => link.visible).map((link) => (
+              {Links.filter((link) => link.visible === true).map((link) => (
                 <Menu.Item key={link.key} icon={link.icon}>
                   {link.label}
                 </Menu.Item>
@@ -185,10 +190,10 @@ const Menus = () => {
             </Menu>
           </div>
         </div>
-        {patient && (
+        {user && (
           <div
             className="flex gap-x-[8px] items-center cursor-pointer"
-            onClick={handlePatientLogout}
+            onClick={handleUserLogout}
           >
             <span>
               <MdLogout size={22} />

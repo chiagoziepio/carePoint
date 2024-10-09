@@ -105,6 +105,7 @@ const AddDoctor = () => {
       const res = await createDoctor(formData).unwrap();
       const data = res;
       message.success(data.msg);
+      form.resetFields();
     } catch (error) {
       message.error(error.data.msg);
     }
@@ -127,6 +128,7 @@ const AddDoctor = () => {
               <Form.Item name={"file"}>
                 <Upload
                   showUploadList={false}
+                  disabled={isLoading}
                   beforeUpload={handleUpload}
                   onChange={onChange}
                 >
@@ -144,7 +146,7 @@ const AddDoctor = () => {
                   rules={[{ required: true }]}
                   className="md:w-[50%] w-full"
                 >
-                  <Input className="h-[40px]" />
+                  <Input className="h-[40px]" disabled={isLoading} />
                 </Form.Item>
 
                 <Form.Item
@@ -160,7 +162,11 @@ const AddDoctor = () => {
                     onChange={handleSelectChange}
                   >
                     {fields.map((field, index) => (
-                      <Select.Option value={field} key={index}>
+                      <Select.Option
+                        value={field}
+                        key={index}
+                        disabled={isLoading}
+                      >
                         {field}
                       </Select.Option>
                     ))}
@@ -174,7 +180,7 @@ const AddDoctor = () => {
                   rules={[{ required: true }]}
                   className="md:w-[50%] w-full"
                 >
-                  <Input className="h-[40px]" />
+                  <Input className="h-[40px]" disabled={isLoading} />
                 </Form.Item>
                 <Form.Item
                   name={"qualification"}
@@ -192,14 +198,14 @@ const AddDoctor = () => {
                   rules={[{ required: true }]}
                   className="md:w-[50%] w-full"
                 >
-                  <Input.Password className="h-[40px]" />
+                  <Input.Password className="h-[40px]" disabled={isLoading} />
                 </Form.Item>
                 <Form.Item
                   name={"address"}
                   label="Address"
                   className="md:w-[50%] w-full"
                 >
-                  <Input className="h-[40px]" />
+                  <Input className="h-[40px]" disabled={isLoading} />
                 </Form.Item>
               </div>
               <div className="md:flex gap-x-[25px] w-full justify-between">
@@ -209,7 +215,11 @@ const AddDoctor = () => {
                   rules={[{ required: true }]}
                   className="md:w-[50%] w-full"
                 >
-                  <Input className="h-[40px]" onInput={handleChange} />
+                  <Input
+                    className="h-[40px]"
+                    onInput={handleChange}
+                    disabled={isLoading}
+                  />
                 </Form.Item>
                 <Form.Item
                   name={"yearsInService"}
@@ -217,18 +227,27 @@ const AddDoctor = () => {
                   rules={[{ required: true }]}
                   className="md:w-[50%] w-full"
                 >
-                  <Input className="h-[40px]" onInput={handleChange} />
+                  <Input
+                    className="h-[40px]"
+                    onInput={handleChange}
+                    disabled={isLoading}
+                  />
                 </Form.Item>
               </div>
               <div>
                 <Form.Item name={"des"} label="Doctor's Description">
-                  <TextArea placeholder="decribe the doctor" autoSize />
+                  <TextArea
+                    placeholder="decribe the doctor"
+                    autoSize
+                    disabled={isLoading}
+                  />
                 </Form.Item>
               </div>
               <div>
                 <Form.Item>
                   <Button
                     htmlType="submit"
+                    disabled={isLoading}
                     className="w-full bg-bg-banner md:w-[130px] rounded-[6px] md:rounded-[20px] text-white h-[48px] flex justify-center items-center text-[19px]"
                   >
                     Submit

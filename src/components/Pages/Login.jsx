@@ -1,21 +1,39 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { usePatientLoginMutation } from "../../Redux/features/Patients/PatientApi";
+import { useDoctorLoginMutation } from "../../Redux/features/Doctor/DoctorApi";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { trackUser } from "../../Redux/Api/AppSlice";
 const Login = () => {
-  const [patientLogin, { isLoading }] = usePatientLoginMutation();
+  const [patientLogin, { isLoading: patientLoginLoading }] =
+    usePatientLoginMutation();
+  const [doctorLogin, { isLoading: doctorLoginLoading }] =
+    useDoctorLoginMutation();
   const [form] = Form.useForm();
 
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.AppReducer.user);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      return navigate(-1);
+    }
+  }, []);
   const onFinish = async (values) => {
     try {
-      const res = await patientLogin(values).unwrap();
+      const res = values.isDoctor
+        ? await doctorLogin(values).unwrap()
+        : await patientLogin(values).unwrap();
       const data = res;
+      console.log(data);
+      dispatch(trackUser(data.user));
       message.success(data.msg);
       navigate("/");
+      form.resetFields();
     } catch (error) {
       message.error(error.data.msg);
-    } finally {
-      form.resetFields();
     }
   };
   return (
@@ -39,7 +57,10 @@ const Login = () => {
                 { whitespace: true, message: "Email cannot be just spaces" },
               ]}
             >
-              <Input className="h-[44px]" disabled={isLoading} />
+              <Input
+                className="h-[44px]"
+                disabled={patientLoginLoading || doctorLoginLoading}
+              />
             </Form.Item>
           </div>
           <div>
@@ -51,7 +72,20 @@ const Login = () => {
                 { whitespace: true, message: "Password cannot be just spaces" },
               ]}
             >
-              <Input.Password className="h-[44px]" disabled={isLoading} />
+              <Input.Password
+                className="h-[44px]"
+                disabled={patientLoginLoading || doctorLoginLoading}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item name={"isDoctor"} valuePropName="checked">
+              <Checkbox
+                className="custom-checkbox"
+                disabled={patientLoginLoading || doctorLoginLoading}
+              >
+                Are you registered as a Doctor on this app
+              </Checkbox>
             </Form.Item>
           </div>
           <div className="flex gap-x-[7px]">
@@ -64,7 +98,7 @@ const Login = () => {
             <Form.Item>
               <Button
                 htmlType="submit"
-                disabled={isLoading}
+                disabled={patientLoginLoading || doctorLoginLoading}
                 className="bg-bg-banner flex justify-center items-center h-[46px] rounded-[6px] text-white w-full text-[18px]"
               >
                 Login

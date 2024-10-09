@@ -57,15 +57,18 @@ body {
   color: black;
 }
 
-.custom-select .ant-select-focused .ant-select-selector{
- border:1px solid #334f39 !important;
+.custom-select .ant-select-focused .ant-select-selector {
+  border: 1px solid #334f39 !important;
 }
-.ant-drawer .ant-drawer-header{
+.ant-drawer .ant-drawer-header {
   display: none !important;
 }
+.custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #70cca1 !important; /* Change to your desired color */
+}
 
-@media (max-width : 620px){
-  .res{
-   /*  width: 97% !important; */
+@media (max-width: 620px) {
+  .res {
+    /*  width: 97% !important; */
   }
 }
