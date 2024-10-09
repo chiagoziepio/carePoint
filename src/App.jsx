@@ -8,6 +8,8 @@ import Login from "./components/Pages/Login";
 import Register from "./components/Register";
 import PatientDashboard from "./components/Pages/PatientDashboard";
 import AddDoctor from "./components/Pages/AdminPages/AddDoctor";
+import ChangePassword from "./components/Pages/DoctorPages/ChangePassword";
+import RedirectPage from "./components/Pages/DoctorPages/RedirectPage";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/patient-dashboard" element={<PatientDashboard />} />
           <Route path="/admin-create-doctor" element={<AddDoctor />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/redirect" element={<RedirectPage />} />
         </Route>
       </Routes>
     </main>

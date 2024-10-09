@@ -50,6 +50,7 @@ const PatientSlice = createSlice({
       (state, action) => {
         (state.patient = action.payload.patient),
           (state.token = action.payload.token);
+        Cookies.set("token", JSON.stringify(state.token));
       }
     );
   },

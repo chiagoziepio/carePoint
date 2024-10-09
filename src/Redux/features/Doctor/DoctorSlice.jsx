@@ -32,6 +32,14 @@ const DoctorSlice = createSlice({
       (state, action) => {
         state.doctor = action.payload.doctor;
         state.token = action.payload.token;
+        Cookies.set("token", JSON.stringify(state.token));
+      }
+    );
+    builder.addMatcher(
+      DoctorApi.endpoints.doctorfirstTimeChangePwd.matchFulfilled,
+      (state, action) => {
+        state.doctor = action.payload.user;
+        state.notification = action.payload.user.notifications;
       }
     );
   },

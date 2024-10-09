@@ -1,7 +1,8 @@
 import { Avatar, Button, Form, Input, message, Select, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreateDoctorMutation } from "../../../Redux/features/Admin/AdminApi";
+import { useNavigate } from "react-router-dom";
 
 const AddDoctor = () => {
   const { TextArea } = Input;
@@ -9,6 +10,14 @@ const AddDoctor = () => {
   const [imageUrl, setImageUrl] = useState(null);
 
   const [form] = Form.useForm();
+  const user = useSelector((state) => state.AppReducer.user);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user || user?.role !== "admin") {
+      navigate(-1);
+    }
+  }, []);
   const [createDoctor, { isLoading }] = useCreateDoctorMutation();
   const fields = [
     "Dermatology",

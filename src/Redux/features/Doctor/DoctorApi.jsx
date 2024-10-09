@@ -16,7 +16,18 @@ export const DoctorApi = AppApi.injectEndpoints({
         body: _id,
       }),
     }),
+    doctorfirstTimeChangePwd: builder.mutation({
+      query: (Password) => ({
+        url: "doctor/firtspasswordchange",
+        method: "POST",
+        body: Password,
+      }),
+    }),
   }),
 });
 
-export const { useDoctorLoginMutation, useDoctorLogoutMutation } = DoctorApi;
+export const {
+  useDoctorLoginMutation,
+  useDoctorLogoutMutation,
+  useDoctorfirstTimeChangePwdMutation,
+} = DoctorApi;

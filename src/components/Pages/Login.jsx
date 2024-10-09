@@ -27,8 +27,10 @@ const Login = () => {
         ? await doctorLogin(values).unwrap()
         : await patientLogin(values).unwrap();
       const data = res;
-      console.log(data);
       dispatch(trackUser(data.user));
+      if (data.user.role === "doctor" && data.user.firstTimeLogin === true) {
+        return navigate("/redirect");
+      }
       message.success(data.msg);
       navigate("/");
       form.resetFields();
@@ -84,7 +86,7 @@ const Login = () => {
                 className="custom-checkbox"
                 disabled={patientLoginLoading || doctorLoginLoading}
               >
-                Are you registered as a Doctor on this app
+                Are you registered as a Doctor on CarePoint?
               </Checkbox>
             </Form.Item>
           </div>
