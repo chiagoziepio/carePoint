@@ -29,7 +29,11 @@ const Navbar = () => {
 
           {user && (
             <Link
-              to={user.role === "doctor" ? "" : "/patient-dashboard"}
+              to={
+                user.role === "doctor"
+                  ? "/doctor-dashboard"
+                  : "/patient-dashboard"
+              }
               className="cursor-pointer"
             >
               <Avatar
@@ -41,7 +45,14 @@ const Navbar = () => {
 
           {user && (
             <div>
-              <Link to={"/notification"} className="cursor-pointer">
+              <Link
+                to={
+                  user.role === "doctor"
+                    ? "/doctor-notification"
+                    : "/notification"
+                }
+                className="cursor-pointer"
+              >
                 <MdNotifications size={30} />
               </Link>
             </div>

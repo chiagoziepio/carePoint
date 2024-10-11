@@ -30,10 +30,19 @@ const authPersistUserConfig = {
   storage,
   whitelist: ["user"],
 };
+const authPersistAdminConfig = {
+  key: "AdminSlice",
+  storage,
+  whitelist: ["doctors"],
+};
 
 const persistedPatientReducer = persistReducer(
   authPersistConfig,
   PatientReducer
+);
+const persistedAdminReducer = persistReducer(
+  authPersistAdminConfig,
+  AdminReducer
 );
 const persistedDocReducer = persistReducer(authPersistDocConfig, DoctorReducer);
 const persistedUserReducer = persistReducer(authPersistUserConfig, AppReducer);
@@ -41,7 +50,7 @@ const persistedUserReducer = persistReducer(authPersistUserConfig, AppReducer);
 const Store = configureStore({
   reducer: {
     PatientReducer: persistedPatientReducer,
-    AdminReducer: AdminReducer,
+    AdminReducer: persistedAdminReducer,
     DoctorReducer: persistedDocReducer,
     AppReducer: persistedUserReducer,
     [AppApi.reducerPath]: AppApi.reducer,

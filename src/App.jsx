@@ -10,6 +10,9 @@ import PatientDashboard from "./components/Pages/PatientDashboard";
 import AddDoctor from "./components/Pages/AdminPages/AddDoctor";
 import ChangePassword from "./components/Pages/DoctorPages/ChangePassword";
 import RedirectPage from "./components/Pages/DoctorPages/RedirectPage";
+import DoctorDashboard from "./components/Pages/DoctorPages/DoctorDashboard";
+import DoctorNotification from "./components/Pages/DoctorPages/DoctorNotification";
+import Notification from "./components/Pages/Notification";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
           <Route path="/admin-create-doctor" element={<AddDoctor />} />
           <Route path="/changepassword" element={<ChangePassword />} />
           <Route path="/redirect" element={<RedirectPage />} />
+          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+          <Route path="/doctor-notification" element={<DoctorNotification />} />
+          <Route path="/notification" element={<Notification />} />
         </Route>
       </Routes>
     </main>

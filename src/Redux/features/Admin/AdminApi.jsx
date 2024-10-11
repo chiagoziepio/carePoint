@@ -9,7 +9,10 @@ export const AdminApi = AppApi.injectEndpoints({
         body: formData,
       }),
     }),
+    getAllDoctors: builder.query({
+      query: () => "admin/alldoctors",
+    }),
   }),
 });
 
-export const { useCreateDoctorMutation } = AdminApi;
+export const { useCreateDoctorMutation, useGetAllDoctorsQuery } = AdminApi;

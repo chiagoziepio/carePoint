@@ -1,36 +1,53 @@
-import React, { useState } from "react";
-import { doctorsOfTheWeek } from "./HomeComponents/DoctorsOfTheWeek";
-import { Form, Select } from "antd";
+import { useState, useEffect } from "react";
+import { Avatar, Select } from "antd";
+import { useGetAllDoctorsQuery } from "../../Redux/features/Admin/AdminApi";
+import { useLocation } from "react-router-dom";
 
 const AllDoctors = () => {
   const fields = [
     "All",
-    "Dermatologist",
-    "Gastroenterologist",
-    "Gynecologist",
-    "Neurologist",
+    "Dermatology",
+    "Gastroenterology",
+    "Gynecology",
+    "Neurology",
     "Pediatricians",
     "General_Physician",
   ];
 
-  const [selectedValue, setSelectedValue] = useState();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const specialityQuery = queryParams.get("speciality");
+
+  const [selectedValue, setSelectedValue] = useState(specialityQuery || "All");
+
+  const { data: alldoctors } = useGetAllDoctorsQuery();
 
   const handleChange = (value) => {
     setSelectedValue(value);
   };
 
-  const selected = doctorsOfTheWeek.filter(
-    (doc) => doc.field === selectedValue
+  const selected = alldoctors?.doctors.filter((doc) =>
+    selectedValue === "All" ? true : doc.specialty.includes(selectedValue)
   );
+
+  useEffect(() => {
+    if (specialityQuery) {
+      setSelectedValue(specialityQuery);
+    }
+  }, [specialityQuery]);
 
   return (
     <div className="h-full flex-grow res p-[10px]">
       <div className="">
         <h3 className="outfit-medium text-[22px] mb-[20px] text-[#4B5563]">
-          Browse through our list of doctor
+          Browse through our list of doctors
         </h3>
         <div className="mb-[40px] custom-select block md:hidden">
-          <Select className="w-full h-[46px] " onChange={handleChange}>
+          <Select
+            className="w-full h-[46px]"
+            onChange={handleChange}
+            value={selectedValue}
+          >
             {fields.map((field, index) => (
               <Select.Option key={index} value={field}>
                 {field}
@@ -44,7 +61,7 @@ const AllDoctors = () => {
             {fields.map((field, index) => (
               <div
                 key={index}
-                className={` w-[263px] h-[47px] cursor-pointer pl-[10px] hover:bg-bg-light rounded-[7px] my-[7px] text-[#4B5563] outfit-medium border border-[#B4B4B4] ${
+                className={`w-[263px] h-[47px] cursor-pointer pl-[10px] hover:bg-bg-light rounded-[7px] my-[7px] text-[#4B5563] outfit-medium border border-[#B4B4B4] ${
                   selectedValue === field && "bg-bg-light"
                 }`}
                 onClick={() => setSelectedValue(field)}
@@ -53,37 +70,15 @@ const AllDoctors = () => {
               </div>
             ))}
           </div>
-          {!selectedValue || selectedValue === "All" ? (
-            <div className="flex gap-[20px] flex-wrap justify-center">
-              {doctorsOfTheWeek.map((doc) => (
-                <div key={doc.id} className="bg-white w-[210px] h-[270px]">
-                  <div className="bg-bg-doc w-full h-[190px]">
-                    <img
-                      src={doc.img}
-                      alt={doc.label}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <div className="p-[7px]">
-                    <div className="flex flex-x-[15px] items-center">
-                      <span className="w-[10px] h-[10px] rounded-[50%] bg-green-500" />
-                      <span className="text-green-500 text-[14px]">
-                        Avaliable
-                      </span>
-                    </div>
-                    <h4 className="outfit-medium text-[20px]">{doc.label}</h4>
-                    <p>{doc.field}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            selected.map((doc) => (
-              <div key={doc.id} className="bg-white w-[210px] h-[270px]">
+
+          <div className="flex gap-[20px] flex-wrap justify-center">
+            {selected?.map((doc) => (
+              <div key={doc._id} className="bg-white w-[210px] h-fit">
                 <div className="bg-bg-doc w-full h-[190px]">
-                  <img
-                    src={doc.img}
-                    alt={doc.label}
+                  <Avatar
+                    src={doc?.doctorPic}
+                    shape="square"
+                    alt={doc?.fullname}
                     className="h-full w-full"
                   />
                 </div>
@@ -91,15 +86,24 @@ const AllDoctors = () => {
                   <div className="flex flex-x-[15px] items-center">
                     <span className="w-[10px] h-[10px] rounded-[50%] bg-green-500" />
                     <span className="text-green-500 text-[14px]">
-                      Avaliable
+                      Available
                     </span>
                   </div>
-                  <h4 className="outfit-medium text-[20px]">{doc.label}</h4>
-                  <p>{doc.field}</p>
+                  <h4 className="outfit-medium text-[20px]">
+                    Dr. {doc?.fullname}
+                  </h4>
+                  <p className="flex flex-col gap-y-[2px]">
+                    {doc?.specialty.map((spec) => {
+                      return <span key={spec}>{spec}</span>;
+                    })}
+                  </p>
+                  <button className="w-full h-[44px] bg-bg-banner text-white text-[19px] flex justify-center items-center mt-[8px] rounded-[7px]">
+                    Book Appointment
+                  </button>
                 </div>
               </div>
-            ))
-          )}
+            ))}
+          </div>
         </div>
       </div>
     </div>

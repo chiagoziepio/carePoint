@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { AdminApi } from "./AdminApi";
 const initialState = {
   feesTerms: [
     {
@@ -27,12 +27,21 @@ const initialState = {
       fees: { consulting: 300, treatment: 1000 },
     },
   ],
+  doctors: [],
 };
 
 const AdminSlice = createSlice({
   name: "AdminSlice",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      AdminApi.endpoints.getAllDoctors.matchFulfilled,
+      (state, action) => {
+        state.doctors = action.payload.doctors;
+      }
+    );
+  },
 });
 
 export default AdminSlice.reducer;

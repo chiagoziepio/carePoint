@@ -1,21 +1,21 @@
 import { Avatar } from "antd";
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const speciality = [
   {
     id: 1,
     img: "/assests/Dermatologist.svg",
-    label: "Dermatologist",
+    label: "Dermatology",
   },
   {
     id: 2,
     img: "/assests/Gastroenterologist.svg",
-    label: "Gastroenterologist",
+    label: "Gastroenterology",
   },
   {
     id: 3,
     img: "/assests/Gynecologist.svg",
-    label: "Gynecologist",
+    label: "Gynecology",
   },
   {
     id: 4,
@@ -25,7 +25,7 @@ const speciality = [
   {
     id: 5,
     img: "/assests/Neurologist.svg",
-    label: "Neurologist",
+    label: "Neurology",
   },
   {
     id: 6,
@@ -35,6 +35,11 @@ const speciality = [
 ];
 
 const SpecialityIcon = () => {
+  const navigate = useNavigate();
+
+  const handleIconClick = (spLabel) => {
+    navigate(`/doctors${spLabel ? `?speciality=${spLabel}` : ""}`);
+  };
   return (
     <div>
       <div>
@@ -47,15 +52,18 @@ const SpecialityIcon = () => {
             appointment hassle-free
           </p>
         </div>
-        <div className="flex gap-[15px] flex-wrap justify-center mt-[50px]">
-        {speciality.map(sp =>(
-            <div key={sp.id} className="flex items-center flex-col gap-y-[15px] cursor-pointer">
-                <Avatar size={60} src= {sp.img}/>
-                <p>{sp.label}</p>
+        <div className="flex gap-[15px] flex-wrap justify-center mt-[30px]">
+          {speciality.map((sp) => (
+            <div
+              key={sp.id}
+              className="flex items-center flex-col gap-y-[15px] cursor-pointer"
+              onClick={() => handleIconClick(sp.label)}
+            >
+              <Avatar size={60} src={sp.img} />
+              <p>{sp.label}</p>
             </div>
-        ))}
+          ))}
         </div>
-        
       </div>
     </div>
   );

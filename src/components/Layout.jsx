@@ -4,9 +4,9 @@ import Menu from "./Menu";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
-//import { tokenChecker } from "../Redux/features/Patients/PatientSlice";
 import { trackUser } from "../Redux/Api/AppSlice";
 import { useDispatch } from "react-redux";
+import { useGetAllDoctorsQuery } from "../Redux/features/Admin/AdminApi";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const Layout = () => {
       dispatch(trackUser(null));
     }
   };
+  const { data } = useGetAllDoctorsQuery();
   useEffect(() => {
     const interval = setInterval(() => {
       checkToken();

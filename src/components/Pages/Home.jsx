@@ -20,7 +20,7 @@ const Home = () => {
                   className="cursor-pointer"
                 />
                 <p className="text-white">
-                  Thousands of Users sing our <br />
+                  Thousands of Users sing our praise <br />
                   Browse through our list of qualified doctors to book an
                   appoint
                 </p>
