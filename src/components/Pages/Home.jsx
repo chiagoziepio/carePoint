@@ -1,6 +1,7 @@
 import { MdArrowRightAlt } from "react-icons/md";
 import SpecialityIcon from "./HomeComponents/SpecialityIcon";
 import DoctorsOfTheWeek from "./HomeComponents/DoctorsOfTheWeek";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -26,11 +27,12 @@ const Home = () => {
                 </p>
               </div>
             </div>
-
-            <button className="group mt-[30px] bg-white h-fit md:h-[64px] md:w-[213px] justify-center items-center p-[5px] w-fit flex gap-x-[10px] rounded-[10px] md:rounded-[30px] cursor-pointer">
-              Book Appointment{" "}
-              <MdArrowRightAlt className=" group-hover:translate-x-[10px] transition-transform duration-500" />
-            </button>
+            <Link to="/doctors">
+              <button className="group mt-[30px] bg-white h-fit md:h-[64px] md:w-[213px] justify-center items-center p-[5px] w-fit flex gap-x-[10px] rounded-[10px] md:rounded-[30px] cursor-pointer">
+                Book Appointment{" "}
+                <MdArrowRightAlt className=" group-hover:translate-x-[10px] transition-transform duration-500" />
+              </button>
+            </Link>
           </div>
           <div className="">
             <img className="" src="/assests/banner.svg" alt="" />

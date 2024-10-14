@@ -23,6 +23,19 @@ export const patientApi = AppApi.injectEndpoints({
         body: _id,
       }),
     }),
+    getdoctor: builder.query({
+      query: (_id) => ({
+        url: `patient/getdoctor/${_id}`,
+        method: "GET",
+      }),
+    }),
+    BookAppointment: builder.mutation({
+      query: (data) => ({
+        url: "/patient/book-appointment",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -30,4 +43,6 @@ export const {
   useUserSignupMutation,
   usePatientLoginMutation,
   usePatientLogoutMutation,
+  useGetdoctorQuery,
+  useBookAppointmentMutation,
 } = patientApi;

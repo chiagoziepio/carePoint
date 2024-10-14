@@ -6,11 +6,10 @@ import { useSelector } from "react-redux";
 
 const Register = () => {
   const [userSignup, { isLoading }] = useUserSignupMutation();
-  const patient = useSelector((state) => state.PatientReducer.patient);
-  const doctor = useSelector((state) => state.DoctorReducer.doctor);
+  const user = useSelector((state) => state.AppReducer.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (patient || doctor) {
+    if (user) {
       return navigate(-1);
     }
   }, []);
@@ -42,73 +41,84 @@ const Register = () => {
 
   return (
     <div className="md:h-[100%] flex-grow res p-[10px] flex justify-center items-center ">
-      <div className="w-full md:w-[500px] h-fit p-[15px] bg-white rounded-[20px] ">
+      <div className="w-full md:w-[700px] h-fit p-[15px] bg-white rounded-[20px] ">
         <div className="mb-[20px]">
           <h3 className="text-[22px] md:text-[26px] outfit-bold md:leading-[32px]">
             Register
           </h3>
         </div>
         <Form layout="vertical" onFinish={onFinish} form={form}>
-          <div>
-            <Form.Item
-              label="Fullname"
-              name={"fullname"}
-              rules={[
-                { required: true },
-                { whitespace: true, message: "Fullname cannot be just spaces" },
-              ]}
-            >
-              <Input className="h-[44px]" disabled={isLoading} />
-            </Form.Item>
+          <div className="md:flex gap-x-[20px]">
+            <div className="md:w-[47%]">
+              <Form.Item
+                label="Fullname"
+                name={"fullname"}
+                rules={[
+                  { required: true },
+                  {
+                    whitespace: true,
+                    message: "Fullname cannot be just spaces",
+                  },
+                ]}
+              >
+                <Input className="h-[44px]" disabled={isLoading} />
+              </Form.Item>
+            </div>
+            <div className="md:w-[47%]">
+              <Form.Item
+                label="Email"
+                name={"email"}
+                rules={[
+                  { required: true },
+                  { whitespace: true, message: "Email cannot be just spaces" },
+                ]}
+              >
+                <Input className="h-[44px]" type="email" disabled={isLoading} />
+              </Form.Item>
+            </div>
+          </div>
+          <div className="md:flex gap-x-[20px]">
+            <div className="md:w-[47%]">
+              <Form.Item
+                label="Address"
+                name={"address"}
+                rules={[
+                  { required: true },
+                  { whitespace: true, message: "Adress cannot be just spaces" },
+                ]}
+              >
+                <Input className="h-[44px]" type="text" disabled={isLoading} />
+              </Form.Item>
+            </div>
+            <div className="md:w-[47%]">
+              <Form.Item
+                label="Phone Number"
+                name={"phone"}
+                rules={[
+                  { required: true },
+                  {
+                    whitespace: true,
+                    message: "Phone number cannot be just spaces",
+                  },
+                ]}
+              >
+                <Input
+                  className="h-[44px]"
+                  type="text"
+                  maxLength={15}
+                  minLength={5}
+                  disabled={isLoading}
+                  onInput={handleChange}
+                />
+              </Form.Item>
+            </div>
           </div>
           <div>
             <Form.Item
-              label="Email"
-              name={"email"}
-              rules={[
-                { required: true },
-                { whitespace: true, message: "Email cannot be just spaces" },
-              ]}
+              label="Gender"
+              name={"gender"}
+              rules={[{ required: true }]}
             >
-              <Input className="h-[44px]" type="email" disabled={isLoading} />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item
-              label="Address"
-              name={"address"}
-              rules={[
-                { required: true },
-                { whitespace: true, message: "Adress cannot be just spaces" },
-              ]}
-            >
-              <Input className="h-[44px]" type="text" disabled={isLoading} />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item
-              label="Phone Number"
-              name={"phone"}
-              rules={[
-                { required: true },
-                {
-                  whitespace: true,
-                  message: "Phone number cannot be just spaces",
-                },
-              ]}
-            >
-              <Input
-                className="h-[44px]"
-                type="text"
-                maxLength={15}
-                minLength={5}
-                disabled={isLoading}
-                onInput={handleChange}
-              />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item label="Gender" name={"gender"}>
               <Select className="h-[44px]" placeholder="Select your gender">
                 <Select.Option value="Male">Male</Select.Option>
                 <Select.Option value="Female">Female</Select.Option>

@@ -13,6 +13,7 @@ import RedirectPage from "./components/Pages/DoctorPages/RedirectPage";
 import DoctorDashboard from "./components/Pages/DoctorPages/DoctorDashboard";
 import DoctorNotification from "./components/Pages/DoctorPages/DoctorNotification";
 import Notification from "./components/Pages/Notification";
+import BookAppointmentPage from "./components/Pages/BookAppointmentPage";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
           <Route path="/doctor-notification" element={<DoctorNotification />} />
           <Route path="/notification" element={<Notification />} />
+          <Route
+            path="/bookappointment/:_id"
+            element={<BookAppointmentPage />}
+          />
         </Route>
       </Routes>
     </main>

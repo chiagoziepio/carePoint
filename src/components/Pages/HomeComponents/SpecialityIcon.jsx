@@ -20,7 +20,7 @@ const speciality = [
   {
     id: 4,
     img: "/assests/General_physician.svg",
-    label: "General_physician",
+    label: "General_Physician",
   },
   {
     id: 5,

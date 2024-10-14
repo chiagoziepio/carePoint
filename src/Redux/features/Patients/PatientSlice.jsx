@@ -53,6 +53,13 @@ const PatientSlice = createSlice({
         Cookies.set("token", JSON.stringify(state.token));
       }
     );
+    builder.addMatcher(
+      patientApi.endpoints.BookAppointment.matchFulfilled,
+      (state, action) => {
+        state.patient = action.payload.user;
+        state.notification = action.payload.user.notifications;
+      }
+    );
   },
 });
 
