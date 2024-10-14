@@ -61,7 +61,7 @@ const BookingModal = ({ isBooking, doc, setIsBooking }) => {
   const hanleSubmitAppointment = async () => {
     if (!user) return message.error("Not logged in");
     if (user.role === "doctor")
-      return message.error("Get Book Appointment as Doctor");
+      return message.error("Can't Book Appointment as Doctor");
     if (
       !serviceFee ||
       !appointmentService ||
@@ -85,11 +85,12 @@ const BookingModal = ({ isBooking, doc, setIsBooking }) => {
     try {
       const res = await BookAppointment(appointmentObj).unwrap();
       const data = res;
-      console.log(data);
+
       message.success(data.msg);
       dispatch(trackUser(data.user));
+      resetBookingForm();
+      setIsBooking(false);
     } catch (error) {
-      console.log(error);
       message.error(error.data.msg);
     }
   };

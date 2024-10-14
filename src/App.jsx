@@ -14,6 +14,7 @@ import DoctorDashboard from "./components/Pages/DoctorPages/DoctorDashboard";
 import DoctorNotification from "./components/Pages/DoctorPages/DoctorNotification";
 import Notification from "./components/Pages/Notification";
 import BookAppointmentPage from "./components/Pages/BookAppointmentPage";
+import Appointments from "./components/Pages/Appointments";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             path="/bookappointment/:_id"
             element={<BookAppointmentPage />}
           />
+          <Route path="/patient-appointment" element={<Appointments />} />
         </Route>
       </Routes>
     </main>

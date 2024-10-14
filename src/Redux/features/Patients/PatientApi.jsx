@@ -36,6 +36,12 @@ export const patientApi = AppApi.injectEndpoints({
         body: data,
       }),
     }),
+    getPatientAppointment: builder.query({
+      query: (_id) => ({
+        url: `patient/get-appointment/${_id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -45,4 +51,5 @@ export const {
   usePatientLogoutMutation,
   useGetdoctorQuery,
   useBookAppointmentMutation,
+  useGetPatientAppointmentQuery,
 } = patientApi;

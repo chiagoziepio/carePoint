@@ -2,7 +2,7 @@ import { Avatar, Button, Form, Input, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
@@ -66,8 +66,16 @@ const PatientDashboard = () => {
                 </h3>
               )}
 
-              <hr className="h-[2px] bg-[#ADADAD]" />
-              <div className="mt-[30px]">
+              <hr className="h-[2px] bg-[#ADADAD] mb-[10px]" />
+              {!isEditing && (
+                <Link
+                  to={"/patient-appointment"}
+                  className=" text-[17px] outfit-small text-blue-500 underline cursor-pointer"
+                >
+                  <p>My Appointments</p>
+                </Link>
+              )}
+              <div className="mt-[20px]">
                 <p className="font-normal text-[16px] text-[#797979] underline">
                   CONTACT INFORMATION
                 </p>
