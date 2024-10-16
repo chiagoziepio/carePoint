@@ -75,6 +75,12 @@ const PatientSlice = createSlice({
         state.patient = action.payload.user;
       }
     );
+    builder.addMatcher(
+      patientApi.endpoints.clearNotification.matchFulfilled,
+      (state, action) => {
+        state.notification = action.payload.notifications;
+      }
+    );
   },
 });
 

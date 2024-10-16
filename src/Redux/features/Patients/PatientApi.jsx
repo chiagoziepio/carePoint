@@ -56,6 +56,13 @@ export const patientApi = AppApi.injectEndpoints({
         body: formData,
       }),
     }),
+    clearNotification: builder.mutation({
+      query: (_id) => ({
+        url: "/patient/clearnotification",
+        method: "DELETE",
+        body: _id,
+      }),
+    }),
   }),
 });
 
@@ -68,4 +75,5 @@ export const {
   useGetPatientAppointmentQuery,
   useUpdatePatientDetailsMutation,
   useUpdatePatientPicMutation,
+  useClearNotificationMutation,
 } = patientApi;
