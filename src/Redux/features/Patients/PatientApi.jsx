@@ -42,6 +42,20 @@ export const patientApi = AppApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    updatePatientDetails: builder.mutation({
+      query: (values) => ({
+        url: "/patient/updatepatient",
+        method: "PATCH",
+        body: values,
+      }),
+    }),
+    updatePatientPic: builder.mutation({
+      query: (formData) => ({
+        url: "/patient/updatepic",
+        method: "PATCH",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -52,4 +66,6 @@ export const {
   useGetdoctorQuery,
   useBookAppointmentMutation,
   useGetPatientAppointmentQuery,
+  useUpdatePatientDetailsMutation,
+  useUpdatePatientPicMutation,
 } = patientApi;

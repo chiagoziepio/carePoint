@@ -1,19 +1,68 @@
-import { Avatar, Button, Form, Input, Upload } from "antd";
+import { Avatar, Button, Form, Input, message, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
+import {
+  useUpdatePatientDetailsMutation,
+  useUpdatePatientPicMutation,
+} from "../../Redux/features/Patients/PatientApi";
+import { trackUser } from "../../Redux/Api/AppSlice";
 const PatientDashboard = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [isEditing, setIsEditing] = useState(false);
   const patient = useSelector((state) => state.PatientReducer.patient);
+  const [isEditing, setIsEditing] = useState(false);
+  const [fileList, setFileList] = useState([]);
+  const [imageUrl, setImageUrl] = useState(patient ? patient?.pic : null);
+
   useEffect(() => {
     if (patient === null) {
       navigate("/");
     }
   }, []);
+
+  const dispatch = useDispatch();
+  const [updatePatientDetails, { isLoading }] =
+    useUpdatePatientDetailsMutation();
+  const [updatePatientPic, { isLoading: isChangingPic }] =
+    useUpdatePatientPicMutation();
+
+  const handleUpload = (file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    return false;
+  };
+
+  const changePatientPic = async () => {
+    try {
+      if (fileList.length < 0) {
+        return message.error("attach a photo");
+      }
+      const formData = new FormData();
+
+      fileList.forEach((file) => {
+        formData.append("files", file.originFileObj);
+      });
+      const res = await updatePatientPic(formData).unwrap();
+      const data = res;
+      dispatch(trackUser(data.user));
+      message.success(data.msg);
+    } catch (error) {
+      message.error(error.data.msg);
+      console.log(error);
+      setImageUrl(patient ? patient?.pic : null);
+    }
+  };
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList.slice(-1));
+    changePatientPic();
+  };
 
   const handleChange = (e) => {
     const regex = /^[0-9+\-()]*$/;
@@ -27,20 +76,40 @@ const PatientDashboard = () => {
   };
 
   const onFinnish = async (values) => {
-    console.log(values);
+    try {
+      const res = await updatePatientDetails(values).unwrap();
+      const data = res;
+      dispatch(trackUser(data.user));
+      message.success(data.msg);
+      setIsEditing(false);
+    } catch (error) {
+      message.error(error.data.msg);
+    }
   };
-  form.setFieldsValue({
-    email: patient?.email,
-    phone: patient?.phone,
-    address: patient?.address,
-    fullname: patient?.fullname,
-  });
+
+  useEffect(() => {
+    if (patient) {
+      form.setFieldsValue({
+        email: patient.email,
+        phone: patient.phone,
+        address: patient.address,
+        fullname: patient.fullname,
+      });
+    }
+  }, [patient, form]);
+
   return (
     <div className="h-full flex-grow res p-[10px] ">
       <div className="w-full sm:w-[60%]">
         <div className="flex gap-x-[10px] flex-wrap mt-[40px]">
-          <Avatar shape="square" size={150} src={patient ? patient.pic : ""} />
-          <Upload>
+          <Avatar shape="square" size={150} src={imageUrl} />
+          <Upload
+            showUploadList={false}
+            beforeUpload={handleUpload}
+            onChange={onChange}
+            disabled={isChangingPic}
+            accept=".png,.jpg,.jpeg"
+          >
             <div className="bg-[#EFEBFF] w-[150px] h-[150px] flex flex-col gap-y-[15px] justify-center items-center cursor-pointer rounded-[7px]">
               <span className="bg-[#D6DAFF] w-[70px] h-[70px] rounded-[50%] flex justify-center items-center">
                 <FaUserAlt size={30} className="text-white" />
@@ -135,7 +204,9 @@ const PatientDashboard = () => {
             </div>
             <div className="mt-[30px] flex gap-[15px] flex-wrap">
               <button
-                onClick={() => setIsEditing(!isEditing)}
+                type="button"
+                onClick={() => setIsEditing((prev) => !prev)}
+                disabled={isLoading}
                 className="text-[15px] outline-none cursor-pointer border border-[#70cca1] w-[127px] h-[47px] md:h-[50px] rounded-[47px] flex justify-center items-center"
               >
                 {isEditing ? "Cancel" : "Edit"}
@@ -143,6 +214,7 @@ const PatientDashboard = () => {
               {isEditing && (
                 <Button
                   htmlType="submit"
+                  disabled={isLoading}
                   className="text-[15px] outline-none cursor-pointer border border-[#70cca1] !bg-transparent h-[47px] md:h-[50px] w-[207px] rounded-[47px] flex justify-center items-center"
                 >
                   Save Information

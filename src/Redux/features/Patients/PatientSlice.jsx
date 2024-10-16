@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const date = new Date();
-date.setTime(date.getTime() + 2 * 60 * 60 * 1000);
+date.setTime(date.getTime() + 3 * 60 * 60 * 1000);
 
 const PatientSlice = createSlice({
   name: "patientSlice",
@@ -58,6 +58,21 @@ const PatientSlice = createSlice({
       (state, action) => {
         state.patient = action.payload.user;
         state.notification = action.payload.user.notifications;
+      }
+    );
+    builder.addMatcher(
+      patientApi.endpoints.updatePatientDetails.matchFulfilled,
+      (state, action) => {
+        state.patient = action.payload.user;
+        (state.token = action.payload.token),
+          (state.notification = action.payload.user.notifications);
+        Cookies.set("token", JSON.stringify(state.token), { expires: date });
+      }
+    );
+    builder.addMatcher(
+      patientApi.endpoints.updatePatientPic.matchFulfilled,
+      (state, action) => {
+        state.patient = action.payload.user;
       }
     );
   },
