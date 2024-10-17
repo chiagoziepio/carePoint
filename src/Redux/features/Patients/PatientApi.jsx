@@ -31,7 +31,7 @@ export const patientApi = AppApi.injectEndpoints({
     }),
     BookAppointment: builder.mutation({
       query: (data) => ({
-        url: "/patient/book-appointment",
+        url: "patient/book-appointment",
         method: "POST",
         body: data,
       }),
@@ -44,21 +44,21 @@ export const patientApi = AppApi.injectEndpoints({
     }),
     updatePatientDetails: builder.mutation({
       query: (values) => ({
-        url: "/patient/updatepatient",
+        url: "patient/updatepatient",
         method: "PATCH",
         body: values,
       }),
     }),
     updatePatientPic: builder.mutation({
       query: (formData) => ({
-        url: "/patient/updatepic",
+        url: "patient/updatepic",
         method: "PATCH",
         body: formData,
       }),
     }),
     clearNotification: builder.mutation({
       query: (_id) => ({
-        url: "/patient/clearnotification",
+        url: "patient/clearnotification",
         method: "DELETE",
         body: _id,
       }),

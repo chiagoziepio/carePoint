@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const date = new Date();
-date.setTime(date.getTime() + 2 * 60 * 60 * 1000);
+date.setTime(date.getTime() + 3 * 60 * 60 * 1000);
 
 const DoctorSlice = createSlice({
   name: "doctorSlice",
@@ -40,6 +40,21 @@ const DoctorSlice = createSlice({
       (state, action) => {
         state.doctor = action.payload.user;
         state.notification = action.payload.user.notifications;
+      }
+    );
+    builder.addMatcher(
+      DoctorApi.endpoints.DocClearNotification.matchFulfilled,
+      (state, action) => {
+        state.notification = action.payload.notifications;
+      }
+    );
+    builder.addMatcher(
+      DoctorApi.endpoints.updateDocDetails.matchFulfilled,
+      (state, action) => {
+        state.doctor = action.payload.user;
+        (state.token = action.payload.token),
+          (state.notification = action.payload.user.notifications);
+        Cookies.set("token", JSON.stringify(state.token), { expires: date });
       }
     );
   },
