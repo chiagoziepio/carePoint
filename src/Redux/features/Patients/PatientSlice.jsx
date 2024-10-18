@@ -22,6 +22,9 @@ const PatientSlice = createSlice({
     tokenChecker: (state) => {
       state.patient = null;
     },
+    updatePatientNotiffication: (state, action) => {
+      state.notification = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -84,6 +87,7 @@ const PatientSlice = createSlice({
   },
 });
 
-export const { toggleDrawer, tokenChecker } = PatientSlice.actions;
+export const { toggleDrawer, tokenChecker, updatePatientNotiffication } =
+  PatientSlice.actions;
 
 export default PatientSlice.reducer;

@@ -5,14 +5,56 @@ import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Cookies from "js-cookie";
 import { trackUser } from "../Redux/Api/AppSlice";
-import { useDispatch } from "react-redux";
+import { updatePatientNotiffication } from "../Redux/features/Patients/PatientSlice";
+import { updateDocNotification } from "../Redux/features/Doctor/DoctorSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetAllDoctorsQuery } from "../Redux/features/Admin/AdminApi";
+import axios from "axios";
+import { BASE_URL } from "./constants";
 
 const Layout = () => {
+  const user = useSelector((state) => state.AppReducer.user);
   const dispatch = useDispatch();
   const getToken = () => {
     const token = Cookies.get("token");
     return token ? JSON.parse(token) : null;
+  };
+
+  const handleRefetchNotification = async () => {
+    const token = getToken();
+    if (user) {
+      if (user.role !== "doctor") {
+        try {
+          const res = await axios.get(
+            `${BASE_URL}patient/get-notification/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = res.data;
+          dispatch(updatePatientNotiffication(data.notifications));
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const res = await axios.get(
+            `${BASE_URL}doctor/get-notification/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = res.data;
+          dispatch(updateDocNotification(data.data));
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
   };
 
   const checkToken = async () => {
@@ -21,7 +63,19 @@ const Layout = () => {
       dispatch(trackUser(null));
     }
   };
+
   const { data } = useGetAllDoctorsQuery();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleRefetchNotification();
+    }, 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       checkToken();

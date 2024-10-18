@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BASE_URL } from "../../components/constants";
 import Cookies from "js-cookie";
 
 const getToken = () => {
@@ -9,7 +10,7 @@ const getToken = () => {
 export const AppApi = createApi({
   reducerPath: "AppApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001/api/",
+    baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const token = getToken();
       if (token) {

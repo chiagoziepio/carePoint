@@ -16,7 +16,11 @@ date.setTime(date.getTime() + 3 * 60 * 60 * 1000);
 const DoctorSlice = createSlice({
   name: "doctorSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    updateDocNotification: (state, action) => {
+      state.notification = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       DoctorApi.endpoints.doctorLogin.matchFulfilled,
@@ -60,4 +64,5 @@ const DoctorSlice = createSlice({
   },
 });
 
+export const { updateDocNotification } = DoctorSlice.actions;
 export default DoctorSlice.reducer;
