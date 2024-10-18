@@ -43,6 +43,13 @@ export const DoctorApi = AppApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    updateAppointment: builder.mutation({
+      query: (data) => ({
+        url: "doctor/update-appointment",
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -53,4 +60,5 @@ export const {
   useDocClearNotificationMutation,
   useGetDocAppointmentQuery,
   useUpdateDocDetailsMutation,
+  useUpdateAppointmentMutation,
 } = DoctorApi;

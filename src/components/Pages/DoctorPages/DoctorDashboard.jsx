@@ -71,7 +71,11 @@ const DoctorDashboard = () => {
         <div className="flex flex-wrap w-full gap-[25px] mt-[30px]">
           <div
             onClick={() => setTab("tab1")}
-            className="bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-md flex gap-[15px] items-center cursor-pointer"
+            className={`${
+              tab === "tab1"
+                ? "bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-none flex gap-[15px] items-center cursor-pointer"
+                : "bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-md flex gap-[15px] items-center cursor-pointer"
+            } `}
           >
             <Avatar src="/assests/doctor_icon.svg" size={60} />
             <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
@@ -80,7 +84,11 @@ const DoctorDashboard = () => {
           </div>
           <div
             onClick={() => setTab("tab2")}
-            className="bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-md flex gap-[15px] items-center cursor-pointer"
+            className={`${
+              tab === "tab2"
+                ? "bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-none flex gap-[15px] items-center cursor-pointer"
+                : "bg-white w-[244px] h-[116px] rounded-[7px] p-[5px] shadow-md flex gap-[15px] items-center cursor-pointer"
+            } `}
           >
             <Avatar
               shape="sqaure"
@@ -100,7 +108,7 @@ const DoctorDashboard = () => {
           {!doctor?.des && (
             <Alert
               message="Warning!"
-              description="Add discription to your profile to help patient get to know you Better"
+              description="Add description to your profile to help patient get to know you Better"
               type="warning"
               showIcon
               style={{ maxWidth: "500px" }}
@@ -198,19 +206,19 @@ const DoctorDashboard = () => {
                         </span>
                         {doctor?.phone}
                       </h3>
-                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab] capitalize">
+                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab]">
                         <span className="text-[black] outfit-small">
                           Email:{" "}
                         </span>
                         {doctor?.email}
                       </h3>
-                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab] capitalize">
+                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab]">
                         <span className="text-[black] outfit-small">
                           Address:{" "}
                         </span>
                         {doctor?.address}
                       </h3>
-                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab] capitalize">
+                      <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab]">
                         <span className="text-[black] outfit-small">
                           Description:{" "}
                         </span>

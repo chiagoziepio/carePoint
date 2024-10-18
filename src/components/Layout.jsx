@@ -37,7 +37,9 @@ const Layout = () => {
       <Navbar />
       <div className="flex-grow  flex gap-x-[20px]  relative">
         <Menu className="" />
-        <Outlet />
+        <div className="md:w-[90%] ">
+          <Outlet />
+        </div>
       </div>
       <Footer />
     </div>
