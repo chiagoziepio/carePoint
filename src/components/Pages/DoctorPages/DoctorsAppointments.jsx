@@ -174,12 +174,27 @@ export const DoctorsAppointments = ({ appointment }) => {
     };
   });
 
+  const recievedFee = theAPP
+    ?.filter((app) => app.status === "Done")
+    .reduce((total, appointment) => {
+      return total + appointment.fee;
+    }, 0);
+
+  const pendingFee = theAPP
+    .filter((app) => app.status === "pending" || app.status === "accepted")
+    .reduce((total, appointment) => {
+      return total + appointment.fee;
+    }, 0);
   return (
     <div className=" w-[70%] md:w-full">
       <div>
         <h3 className="outfit-medium text-[20px] text-[#323232]">
           All Appointments
         </h3>
+        <div>
+          <p>Income Earned : ${recievedFee}</p>
+          <p>Incoming Earnings : ${pendingFee}</p>
+        </div>
         <div className="bg-white rounded-[12px]">
           <Table
             scroll={{ x: "max-content" }}

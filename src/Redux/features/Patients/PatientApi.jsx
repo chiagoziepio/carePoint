@@ -63,6 +63,13 @@ export const patientApi = AppApi.injectEndpoints({
         body: _id,
       }),
     }),
+    cancelPatientNotification: builder.mutation({
+      query: (_id) => ({
+        url: "patient/cnacel-appointment",
+        method: "DELETE",
+        body: _id,
+      }),
+    }),
   }),
 });
 
@@ -76,4 +83,5 @@ export const {
   useUpdatePatientDetailsMutation,
   useUpdatePatientPicMutation,
   useClearNotificationMutation,
+  useCancelPatientNotificationMutation,
 } = patientApi;
