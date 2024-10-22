@@ -14,6 +14,7 @@ import { usePatientLogoutMutation } from "../Redux/features/Patients/PatientApi"
 import { useDoctorLogoutMutation } from "../Redux/features/Doctor/DoctorApi";
 import { MdAddToPhotos } from "react-icons/md";
 import { trackUser } from "../Redux/Api/AppSlice";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 const Menus = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isDrawerOpen = useSelector(
@@ -91,6 +92,17 @@ const Menus = () => {
       ),
       path: "/admin-create-doctor",
       icon: <MdAddToPhotos size={22} />,
+      visible: user && user.role === "admin",
+    },
+    {
+      key: 6,
+      label: (
+        <NavLink to={"/admin-dashboard"} className={""}>
+          Panel
+        </NavLink>
+      ),
+      path: "/admin-dashboard",
+      icon: <MdOutlineAdminPanelSettings size={22} />,
       visible: user && user.role === "admin",
     },
   ];

@@ -50,6 +50,13 @@ export const DoctorApi = AppApi.injectEndpoints({
         body: data,
       }),
     }),
+    markAsReadNotification: builder.mutation({
+      query: (notificationIds) => ({
+        url: "doctor/markAsRead",
+        method: "PATCH",
+        body: notificationIds,
+      }),
+    }),
   }),
 });
 
@@ -61,4 +68,5 @@ export const {
   useGetDocAppointmentQuery,
   useUpdateDocDetailsMutation,
   useUpdateAppointmentMutation,
+  useMarkAsReadNotificationMutation,
 } = DoctorApi;

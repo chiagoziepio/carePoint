@@ -12,7 +12,14 @@ export const AdminApi = AppApi.injectEndpoints({
     getAllDoctors: builder.query({
       query: () => "admin/alldoctors",
     }),
+    getAllAppointments: builder.query({
+      query: () => "admin/allappointments",
+    }),
   }),
 });
 
-export const { useCreateDoctorMutation, useGetAllDoctorsQuery } = AdminApi;
+export const {
+  useCreateDoctorMutation,
+  useGetAllDoctorsQuery,
+  useGetAllAppointmentsQuery,
+} = AdminApi;

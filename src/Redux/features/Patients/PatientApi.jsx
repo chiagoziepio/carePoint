@@ -70,6 +70,13 @@ export const patientApi = AppApi.injectEndpoints({
         body: _id,
       }),
     }),
+    markAsReadNotificationPatient: builder.mutation({
+      query: (notificationIds) => ({
+        url: "patient/markAsRead",
+        method: "PATCH",
+        body: notificationIds,
+      }),
+    }),
   }),
 });
 
@@ -84,4 +91,5 @@ export const {
   useUpdatePatientPicMutation,
   useClearNotificationMutation,
   useCancelPatientNotificationMutation,
+  useMarkAsReadNotificationPatientMutation,
 } = patientApi;

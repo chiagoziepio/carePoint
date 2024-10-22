@@ -1,4 +1,4 @@
-import { Avatar, message, Table } from "antd";
+import { Avatar, message, Modal, Table } from "antd";
 import { useUpdateAppointmentMutation } from "../../../Redux/features/Doctor/DoctorApi";
 import { useState } from "react";
 export const DoctorsAppointments = ({ appointment }) => {
@@ -6,20 +6,42 @@ export const DoctorsAppointments = ({ appointment }) => {
   const [newApp, setNewApp] = useState(null);
   const handleUpdateAppointment = async (term, record) => {
     const appData = { term, _id: record.key };
-    try {
-      const res = await updateAppointment(appData).unwrap();
-      const data = res;
-      const appointment = data.data;
-      const appointments = Array.isArray(appointment)
-        ? [...appointment].reverse()
-        : appointment
-        ? [...appointment].reverse()
-        : [];
-      setNewApp(appointments);
-      message.success(data.msg);
-    } catch (error) {
-      message.error(error.data.msg);
+    if (term === "reject") {
+      Modal.confirm({
+        title: "Confirmation",
+        content: "Are you sure you want to reject this appointment?",
+        onOk: async () => {
+          try {
+            const res = await updateAppointment(appData).unwrap();
+            const data = res;
+            const appointment = data.data;
+            const appointments = Array.isArray(appointment)
+              ? [...appointment].reverse()
+              : appointment
+              ? [...appointment].reverse()
+              : [];
+            setNewApp(appointments);
+            message.success(data.msg);
+          } catch (error) {
+            message.error(error.data.msg);
+          }
+        },
+      });
     }
+    // try {
+    //   const res = await updateAppointment(appData).unwrap();
+    //   const data = res;
+    //   const appointment = data.data;
+    //   const appointments = Array.isArray(appointment)
+    //     ? [...appointment].reverse()
+    //     : appointment
+    //     ? [...appointment].reverse()
+    //     : [];
+    //   setNewApp(appointments);
+    //   message.success(data.msg);
+    // } catch (error) {
+    //   message.error(error.data.msg);
+    // }
   };
 
   const columns = [
@@ -186,7 +208,7 @@ export const DoctorsAppointments = ({ appointment }) => {
       return total + appointment.fee;
     }, 0);
   return (
-    <div className=" w-[70%] md:w-full">
+    <div className=" w-[70%] md:w-[97%]">
       <div>
         <h3 className="outfit-medium text-[20px] text-[#323232]">
           All Appointments
