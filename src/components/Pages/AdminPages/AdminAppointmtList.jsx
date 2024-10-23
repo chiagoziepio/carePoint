@@ -1,6 +1,7 @@
 import { Avatar, Table } from "antd";
 import { useGetAllAppointmentsQuery } from "../../../Redux/features/Admin/AdminApi";
 import { useState } from "react";
+import TableList from "../../TableList";
 
 const AdminDashboard = ({ appointment }) => {
   const [newApp, setNewApp] = useState(null);
@@ -138,21 +139,11 @@ const AdminDashboard = ({ appointment }) => {
   });
 
   return (
-    <div>
-      <div>
-        <div className="bg-white rounded-[12px]">
-          <Table
-            scroll={{ x: "max-content" }}
-            style={{
-              overflowX: "auto",
-            }}
-            dataSource={dataSource}
-            columns={columns}
-            rowKey="key"
-          />
-        </div>
-      </div>
-    </div>
+    <TableList
+      dataSource={dataSource}
+      columns={columns}
+      title=" All Appointment"
+    />
   );
 };
 

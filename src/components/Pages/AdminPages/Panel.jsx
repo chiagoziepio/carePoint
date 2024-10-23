@@ -2,9 +2,14 @@ import { useState } from "react";
 import AdminDashboard from "./AdminAppointmtList";
 import { useGetAllAppointmentsQuery } from "../../../Redux/features/Admin/AdminApi";
 import { Avatar } from "antd";
+import Doctors from "./Doctors";
+import Patients from "./Patients";
 
 const Panel = () => {
   const [tab, setTab] = useState("tab1");
+  const [DocCount, setDocCount] = useState(0);
+  const [PatCount, setPatCount] = useState(0);
+
   const { data: appointment, isLoading } = useGetAllAppointmentsQuery();
   const appointmentData = appointment?.data;
   const theApp = Array.isArray(appointmentData)
@@ -48,9 +53,12 @@ const Panel = () => {
             } `}
           >
             <Avatar src="/assests/doctor_icon.svg" size={60} />
-            <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
-              Doctors
-            </h3>
+            <div>
+              <span>{DocCount}</span>
+              <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
+                {DocCount > 1 ? "Doctors" : "Doctor"}
+              </h3>
+            </div>
           </div>
           <div
             onClick={() => setTab("tab3")}
@@ -61,13 +69,18 @@ const Panel = () => {
             } `}
           >
             <Avatar src="/assests/patients_icon.svg" size={60} />
+            <span>{PatCount}</span>
             <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
-              Patients
+              {PatCount > 1 ? "Patients" : "Patient"}
             </h3>
           </div>
         </div>
         <h3 className="my-[15px] outfit-medium text-[20px]">Admin Dashboard</h3>
         {tab === "tab1" && <AdminDashboard appointment={theApp} />}
+        {tab === "tab2" && (
+          <Doctors setDocCount={setDocCount} appointment={theApp} />
+        )}
+        {tab === "tab3" && <Patients setPatCount={setPatCount} />}
       </div>
     </div>
   );

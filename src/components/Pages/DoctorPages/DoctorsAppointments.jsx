@@ -1,6 +1,7 @@
-import { Avatar, message, Modal, Table } from "antd";
+import { Avatar, message, Modal } from "antd";
 import { useUpdateAppointmentMutation } from "../../../Redux/features/Doctor/DoctorApi";
 import { useState } from "react";
+import TableList from "../../TableList";
 export const DoctorsAppointments = ({ appointment }) => {
   const [updateAppointment] = useUpdateAppointmentMutation();
   const [newApp, setNewApp] = useState(null);
@@ -208,24 +209,17 @@ export const DoctorsAppointments = ({ appointment }) => {
       return total + appointment.fee;
     }, 0);
   return (
-    <div className=" w-[70%] md:w-[97%]">
+    <div>
       <div>
-        <h3 className="outfit-medium text-[20px] text-[#323232]">
-          All Appointments
-        </h3>
         <div>
           <p>Income Earned : ${recievedFee}</p>
           <p>Incoming Earnings : ${pendingFee}</p>
         </div>
         <div className="bg-white rounded-[12px]">
-          <Table
-            scroll={{ x: "max-content" }}
-            style={{
-              overflowX: "auto",
-            }}
-            dataSource={dataSource}
+          <TableList
             columns={columns}
-            rowKey="key"
+            dataSource={dataSource}
+            title={"All Appointment"}
           />
         </div>
       </div>

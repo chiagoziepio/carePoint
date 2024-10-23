@@ -66,7 +66,9 @@ body {
 .custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
   background-color: #70cca1 !important; /* Change to your desired color */
 }
-
+.ant-switch.ant-switch-checked {
+  background: #70cca1 !important;
+}
 @media (max-width: 620px) {
   .res {
     /*  width: 97% !important; */
