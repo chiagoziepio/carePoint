@@ -18,6 +18,34 @@ export const AdminApi = AppApi.injectEndpoints({
     getAllPatients: builder.query({
       query: () => "admin/allpatients",
     }),
+    adminCancelAppointment: builder.mutation({
+      query: (_id) => ({
+        url: `admin/cancel-appointment`,
+        method: "DELETE",
+        body: _id,
+      }),
+    }),
+    deactivateDoctor: builder.mutation({
+      query: (_id) => ({
+        url: `admin/deactivate-doctor`,
+        method: "PATCH",
+        body: _id,
+      }),
+    }),
+    activateDoctor: builder.mutation({
+      query: (_id) => ({
+        url: `admin/activate-doctor`,
+        method: "PATCH",
+        body: _id,
+      }),
+    }),
+    togglePatientStatus: builder.mutation({
+      query: (_id) => ({
+        url: `admin/toggle-patient-status`,
+        method: "PATCH",
+        body: _id,
+      }),
+    }),
   }),
 });
 
@@ -26,4 +54,8 @@ export const {
   useGetAllDoctorsQuery,
   useGetAllAppointmentsQuery,
   useGetAllPatientsQuery,
+  useAdminCancelAppointmentMutation,
+  useDeactivateDoctorMutation,
+  useActivateDoctorMutation,
+  useTogglePatientStatusMutation,
 } = AdminApi;

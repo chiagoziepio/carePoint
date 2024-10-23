@@ -1,11 +1,24 @@
-import { Avatar, Table } from "antd";
-import { useGetAllAppointmentsQuery } from "../../../Redux/features/Admin/AdminApi";
+import { Avatar, message } from "antd";
+import { useAdminCancelAppointmentMutation } from "../../../Redux/features/Admin/AdminApi";
 import { useState } from "react";
 import TableList from "../../TableList";
+import PropTypes from "prop-types";
 
 const AdminDashboard = ({ appointment }) => {
   const [newApp, setNewApp] = useState(null);
 
+  const [adminCancelAppointment] = useAdminCancelAppointmentMutation();
+  const handleCancelAppointment = async (record) => {
+    const _id = record.key;
+    try {
+      const res = await adminCancelAppointment({ _id }).unwrap();
+      const data = res;
+      message.success(data.msg);
+      setNewApp(data.data);
+    } catch (error) {
+      message.error(error.data.msg);
+    }
+  };
   const APPS = newApp ? newApp : appointment;
 
   const columns = [
@@ -91,7 +104,7 @@ const AdminDashboard = ({ appointment }) => {
             return (
               <div className="flex gap-[5px]">
                 <button
-                  //onClick={() => handleUpdateAppointment("accepted", record)}
+                  onClick={() => handleCancelAppointment(record)}
                   className="w-[70px] h-[30px] text-[12px] text-white bg-red-950"
                 >
                   Cancel
@@ -139,12 +152,17 @@ const AdminDashboard = ({ appointment }) => {
   });
 
   return (
-    <TableList
-      dataSource={dataSource}
-      columns={columns}
-      title=" All Appointment"
-    />
+    <div>
+      <TableList
+        dataSource={dataSource}
+        columns={columns}
+        title=" All Appointment"
+      />
+    </div>
   );
 };
 
+AdminDashboard.propTypes = {
+  appointment: PropTypes.array.isRequired,
+};
 export default AdminDashboard;

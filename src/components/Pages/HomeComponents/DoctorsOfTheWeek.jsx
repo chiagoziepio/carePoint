@@ -31,8 +31,20 @@ const DoctorsOfTheWeek = () => {
                   </div>
                   <div className="p-[7px]">
                     <div className="flex flex-x-[15px] items-center">
-                      <span className="w-[10px] h-[10px] rounded-[50%] bg-green-500" />
-                      <span className="text-green-500 text-[14px]">
+                      <span
+                        className={`${
+                          doc.status === "Available"
+                            ? "w-[10px] h-[10px] rounded-[50%] bg-green-500"
+                            : "w-[10px] h-[10px] rounded-[50%] bg-red-950"
+                        }`}
+                      />
+                      <span
+                        className={`${
+                          doc.status === "Available"
+                            ? "text-green-500"
+                            : "text-red-900"
+                        } outfit-medium text-[14px]`}
+                      >
                         {doc.status}
                       </span>
                     </div>

@@ -1,21 +1,52 @@
 import PropTypes from "prop-types";
 import { useGetAllDoctorsQuery } from "../../../Redux/features/Admin/AdminApi";
-import { Avatar, Switch } from "antd";
+import { Avatar, message, Modal, Switch } from "antd";
 import TableList from "../../TableList";
+import { useState } from "react";
+import { MdClose } from "react-icons/md";
+import {
+  useDeactivateDoctorMutation,
+  useActivateDoctorMutation,
+} from "../../../Redux/features/Admin/AdminApi";
+
 const Doctors = ({ setDocCount, appointment }) => {
+  const [isModalShowing, setIsModalShowing] = useState(false);
+  const [selectDoc, setSelectDoc] = useState(null);
+  const [newDocs, setNewDocs] = useState(null);
   const { data: doctor, isLoading } = useGetAllDoctorsQuery();
+  const [deactivateDoctor] = useDeactivateDoctorMutation();
+  const [activateDoctor] = useActivateDoctorMutation();
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const doctorData = doctor?.doctors;
+  const handleDeactivateDoc = async () => {
+    //console.log(selectDoc);
+    const _id = selectDoc.key;
+
+    try {
+      const res =
+        selectDoc.status === "Available"
+          ? await deactivateDoctor({ _id }).unwrap()
+          : await activateDoctor({ _id }).unwrap();
+      const data = res;
+      message.success(data.msg);
+      setNewDocs(data.data);
+    } catch (error) {
+      message.error(error.data.msg);
+    } finally {
+      setIsModalShowing(false);
+      setSelectDoc(null);
+    }
+  };
+  const doctorData = newDocs ? newDocs : doctor?.doctors;
   const DocArray = Array.isArray(doctorData)
     ? [...doctorData].reverse()
     : doctorData
     ? [...doctorData].reverse()
     : [];
   setDocCount(DocArray.length);
-  //console.log(DocArray);
 
   const dataSource = DocArray.map((doctor) => ({
     key: doctor._id,
@@ -142,21 +173,69 @@ const Doctors = ({ setDocCount, appointment }) => {
       render: (status, record) => {
         return (
           <div>
-            <Switch checked={status === "Available"} />
+            <Switch
+              checked={status === "Available"}
+              onClick={() => {
+                setSelectDoc(record);
+                setIsModalShowing(true);
+              }}
+            />
           </div>
         );
       },
     },
   ];
   return (
-    <TableList
-      dataSource={dataSource}
-      columns={columns}
-      title={"All Doctors"}
-    />
+    <div>
+      {isModalShowing && (
+        <Modal open={isModalShowing} footer={null} closable={false} width={400}>
+          <div>
+            <div className="flex justify-between items-center">
+              <h3 className="outfit-small text-[22px]">Action Warning</h3>
+              <span
+                onClick={() => setIsModalShowing(false)}
+                className="w-fit h-fit cursor-pointer"
+              >
+                <MdClose size={22} />
+              </span>
+            </div>
+            <div className="my-[15px]">
+              <p className="outfit-medium text-[22px] text-wrap text-center">
+                Are you sure you want to{" "}
+                {selectDoc.status === "Available" ? "Deactivate" : "Activate"}{" "}
+                this Doctor
+              </p>
+            </div>
+            <div className="flex gap-[10px] justify-center">
+              <button
+                onClick={() => setIsModalShowing(false)}
+                className="w-[120px] h-[44px] rounded-[7px] bg-bg-banner text-white text-[16px] flex items-center justify-center"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeactivateDoc}
+                className={`${
+                  selectDoc.status === "Available"
+                    ? "bg-red-950"
+                    : "bg-primary-bg-color"
+                } w-[120px] h-[44px] rounded-[7px] text-white text-[16px] flex items-center justify-center`}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      <TableList
+        dataSource={dataSource}
+        columns={columns}
+        title={"All Doctors"}
+      />
+    </div>
   );
 };
-Doctors.PropTypes = {
+Doctors.propTypes = {
   setDocCount: PropTypes.func,
   appointment: PropTypes.array,
 };

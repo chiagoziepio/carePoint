@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminDashboard from "./AdminAppointmtList";
 import { useGetAllAppointmentsQuery } from "../../../Redux/features/Admin/AdminApi";
 import { Avatar } from "antd";
 import Doctors from "./Doctors";
 import Patients from "./Patients";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Panel = () => {
   const [tab, setTab] = useState("tab1");
   const [DocCount, setDocCount] = useState(0);
   const [PatCount, setPatCount] = useState(0);
+
+  const user = useSelector((state) => state.AppReducer.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user || user.role !== "admin") {
+      navigate(-1);
+    }
+  }, []);
 
   const { data: appointment, isLoading } = useGetAllAppointmentsQuery();
   const appointmentData = appointment?.data;
@@ -55,7 +65,7 @@ const Panel = () => {
             <Avatar src="/assests/doctor_icon.svg" size={60} />
             <div>
               <span>{DocCount}</span>
-              <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
+              <h3 className="outfit-medium text-[20px] my-[6px] text-[#3c3b3bab]">
                 {DocCount > 1 ? "Doctors" : "Doctor"}
               </h3>
             </div>
@@ -69,10 +79,12 @@ const Panel = () => {
             } `}
           >
             <Avatar src="/assests/patients_icon.svg" size={60} />
-            <span>{PatCount}</span>
-            <h3 className="outfit-medium text-[20px] my-[6px] ml-[10px] text-[#3c3b3bab]">
-              {PatCount > 1 ? "Patients" : "Patient"}
-            </h3>
+            <div className="flex flex-col justify-center">
+              <span>{PatCount}</span>
+              <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab]">
+                {PatCount > 1 ? "Patients" : "Patient"}
+              </h3>
+            </div>
           </div>
         </div>
         <h3 className="my-[15px] outfit-medium text-[20px]">Admin Dashboard</h3>
@@ -80,7 +92,9 @@ const Panel = () => {
         {tab === "tab2" && (
           <Doctors setDocCount={setDocCount} appointment={theApp} />
         )}
-        {tab === "tab3" && <Patients setPatCount={setPatCount} />}
+        {tab === "tab3" && (
+          <Patients setPatCount={setPatCount} appointment={theApp} />
+        )}
       </div>
     </div>
   );

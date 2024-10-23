@@ -41,6 +41,18 @@ const AdminSlice = createSlice({
         state.doctors = action.payload.doctors;
       }
     );
+    builder.addMatcher(
+      AdminApi.endpoints.deactivateDoctor.matchFulfilled,
+      (state, action) => {
+        state.doctors = action.payload.data;
+      }
+    );
+    builder.addMatcher(
+      AdminApi.endpoints.activateDoctor.matchFulfilled,
+      (state, action) => {
+        state.doctors = action.payload.data;
+      }
+    );
   },
 });
 
