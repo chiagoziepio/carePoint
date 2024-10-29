@@ -1,4 +1,4 @@
-import { Avatar, message } from "antd";
+import { Avatar, message, Modal } from "antd";
 import { useAdminCancelAppointmentMutation } from "../../../Redux/features/Admin/AdminApi";
 import { useState } from "react";
 import TableList from "../../TableList";
@@ -6,12 +6,14 @@ import PropTypes from "prop-types";
 
 const AdminDashboard = ({ appointment }) => {
   const [newApp, setNewApp] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
 
   const [adminCancelAppointment] = useAdminCancelAppointmentMutation();
-  const handleCancelAppointment = async (record) => {
-    const _id = record.key;
+  const handleCancelAppointment = async (term, record) => {
+    const appData = { term, _id: record.key };
     try {
-      const res = await adminCancelAppointment({ _id }).unwrap();
+      const res = await adminCancelAppointment(appData).unwrap();
       const data = res;
       message.success(data.msg);
       setNewApp(data.data);
@@ -87,7 +89,9 @@ const AdminDashboard = ({ appointment }) => {
       render: (status) => {
         return (
           <div className="flex flex-col gap-[6px]">
-            <span>{status}</span>
+            <span className={`${status === "rejected" && "text-red-950"}`}>
+              {status}
+            </span>
           </div>
         );
       },
@@ -100,11 +104,33 @@ const AdminDashboard = ({ appointment }) => {
         switch (status) {
           case "Done":
             return <p>completed</p>;
+
+          case "rejected":
+            return (
+              <div className="flex gap-[5px]">
+                <button
+                  onClick={() => {
+                    setCurrentRecord(record);
+                    setShowModal(true);
+                  }}
+                  className="w-[70px] h-[30px] text-[12px] text-white bg-green-950"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => handleCancelAppointment("delete", record)}
+                  className="w-[70px] h-[30px] text-[12px] text-white bg-red-950"
+                >
+                  delete
+                </button>
+              </div>
+            );
+
           default:
             return (
               <div className="flex gap-[5px]">
                 <button
-                  onClick={() => handleCancelAppointment(record)}
+                  onClick={() => handleCancelAppointment("cancelled", record)}
                   className="w-[70px] h-[30px] text-[12px] text-white bg-red-950"
                 >
                   Cancel
@@ -143,7 +169,7 @@ const AdminDashboard = ({ appointment }) => {
         term: app.appointementTerm,
         service: app.appointementService,
       },
-
+      rejection_reason: app.rejection_reason,
       fee: app.fee,
       date_time: { date: formattedDate, time: formattedTime },
       status: app.status,
@@ -153,6 +179,22 @@ const AdminDashboard = ({ appointment }) => {
 
   return (
     <div>
+      <Modal
+        open={showModal}
+        onCancel={() => setShowModal(false)}
+        footer={null}
+        width={400}
+      >
+        <div>
+          <h3 className="outfit-medium text-[24px]">Cancellation Reason</h3>
+          {console.log(currentRecord)}
+          <div className="my-[10px]">
+            {currentRecord?.rejection_reason
+              ? currentRecord.rejection_reason
+              : "No reason Provided"}
+          </div>
+        </div>
+      </Modal>
       <TableList
         dataSource={dataSource}
         columns={columns}

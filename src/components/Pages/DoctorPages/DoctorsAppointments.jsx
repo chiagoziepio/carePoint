@@ -1,48 +1,66 @@
-import { Avatar, message, Modal } from "antd";
+import { Avatar, Input, message, Modal } from "antd";
 import { useUpdateAppointmentMutation } from "../../../Redux/features/Doctor/DoctorApi";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import TableList from "../../TableList";
 export const DoctorsAppointments = ({ appointment }) => {
   const [updateAppointment] = useUpdateAppointmentMutation();
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [currentRecord, setCurrentRecord] = useState(null);
+
   const [newApp, setNewApp] = useState(null);
+
   const handleUpdateAppointment = async (term, record) => {
-    const appData = { term, _id: record.key };
-    if (term === "reject") {
-      Modal.confirm({
-        title: "Confirmation",
-        content: "Are you sure you want to reject this appointment?",
-        onOk: async () => {
-          try {
-            const res = await updateAppointment(appData).unwrap();
-            const data = res;
-            const appointment = data.data;
-            const appointments = Array.isArray(appointment)
-              ? [...appointment].reverse()
-              : appointment
-              ? [...appointment].reverse()
-              : [];
-            setNewApp(appointments);
-            message.success(data.msg);
-          } catch (error) {
-            message.error(error.data.msg);
-          }
-        },
-      });
+    if (term === "rejected") {
+      setRejectionReason(""); // Reset the rejection reason before showing the modal
+      setCurrentRecord(record); // Store the current record
+      setShowModal(true); // Open the modal
+    } else {
+      const appData = { term, _id: record.key };
+      const res = await updateAppointment(appData).unwrap();
+      const data = res;
+      const appointment = data.data;
+      const appointments = Array.isArray(appointment)
+        ? [...appointment].reverse()
+        : appointment
+        ? [...appointment].reverse()
+        : [];
+      setNewApp(appointments);
+      message.success(data.msg);
     }
-    // try {
-    //   const res = await updateAppointment(appData).unwrap();
-    //   const data = res;
-    //   const appointment = data.data;
-    //   const appointments = Array.isArray(appointment)
-    //     ? [...appointment].reverse()
-    //     : appointment
-    //     ? [...appointment].reverse()
-    //     : [];
-    //   setNewApp(appointments);
-    //   message.success(data.msg);
-    // } catch (error) {
-    //   message.error(error.data.msg);
-    // }
+  };
+
+  const handleRejectionConfirmed = async () => {
+    if (!rejectionReason) {
+      message.error("Please enter a reason for rejection");
+      return;
+    }
+
+    const appData = {
+      term: "rejected",
+      _id: currentRecord.key,
+      rejectionReason,
+    };
+    try {
+      const res = await updateAppointment(appData).unwrap();
+      const data = res;
+      const appointment = data.data;
+      const appointments = Array.isArray(appointment)
+        ? [...appointment].reverse()
+        : appointment
+        ? [...appointment].reverse()
+        : [];
+      setNewApp(appointments);
+      message.success(data.msg);
+      setShowModal(false);
+    } catch (error) {
+      message.error(error.data.msg);
+    }
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
   };
 
   const columns = [
@@ -115,7 +133,7 @@ export const DoctorsAppointments = ({ appointment }) => {
             return (
               <div className="flex gap-[5px]">
                 <button
-                  onClick={() => handleUpdateAppointment("reject", record)}
+                  onClick={() => handleUpdateAppointment("rejected", record)}
                   className="w-[70px] h-[30px] text-[12px] text-white bg-red-950"
                 >
                   Reject
@@ -163,6 +181,7 @@ export const DoctorsAppointments = ({ appointment }) => {
     },
   ];
   const theAPP = newApp ? newApp : appointment;
+
   const dataSource = theAPP.map((app, index) => {
     const formattedDate = new Date(app.appointmentDate).toLocaleDateString(
       "en-US",
@@ -211,6 +230,22 @@ export const DoctorsAppointments = ({ appointment }) => {
   return (
     <div>
       <div>
+        <Modal
+          title="Confirmation"
+          open={showModal}
+          onOk={handleRejectionConfirmed}
+          onCancel={handleCancel}
+        >
+          <div>
+            <h3>Are you sure you want to reject this appointment?</h3>
+            <Input
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+              className="w-full h-[45px] my-[15px]"
+              placeholder="Enter your reason"
+            />
+          </div>
+        </Modal>
         <div>
           <p>Income Earned : ${recievedFee}</p>
           <p>Incoming Earnings : ${pendingFee}</p>
@@ -225,4 +260,8 @@ export const DoctorsAppointments = ({ appointment }) => {
       </div>
     </div>
   );
+};
+
+DoctorsAppointments.propTypes = {
+  appointment: PropTypes.array,
 };
