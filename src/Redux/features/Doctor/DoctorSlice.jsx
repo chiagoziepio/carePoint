@@ -61,6 +61,12 @@ const DoctorSlice = createSlice({
         Cookies.set("token", JSON.stringify(state.token), { expires: date });
       }
     );
+    builder.addMatcher(
+      DoctorApi.endpoints.updateDoctorPic.matchFulfilled,
+      (state, action) => {
+        state.doctor = action.payload.user;
+      }
+    );
   },
 });
 
