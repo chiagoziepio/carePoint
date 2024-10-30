@@ -57,6 +57,13 @@ export const DoctorApi = AppApi.injectEndpoints({
         body: notificationIds,
       }),
     }),
+    updateDoctorPic: builder.mutation({
+      query: (formData) => ({
+        url: "doctor/updatepic",
+        method: "PATCH",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useUpdateDocDetailsMutation,
   useUpdateAppointmentMutation,
   useMarkAsReadNotificationMutation,
+  useUpdateDoctorPicMutation,
 } = DoctorApi;

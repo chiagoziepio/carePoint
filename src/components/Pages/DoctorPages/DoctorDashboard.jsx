@@ -1,4 +1,4 @@
-import { Alert, Avatar, Button, Form, Input, message } from "antd";
+import { Alert, Avatar, Button, Form, Input, message, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { DoctorsAppointments } from "./DoctorsAppointments";
 import {
   useGetDocAppointmentQuery,
   useUpdateDocDetailsMutation,
+  useUpdateDoctorPicMutation,
 } from "../../../Redux/features/Doctor/DoctorApi";
 import { trackUser } from "../../../Redux/Api/AppSlice";
 
@@ -15,8 +16,14 @@ const DoctorDashboard = () => {
   const { TextArea } = Input;
   const doctor = useSelector((state) => state.DoctorReducer.doctor);
   const user = useSelector((state) => state.AppReducer.user);
+  const [fileList, setFileList] = useState([]);
+  const [imageUrl, setImageUrl] = useState(doctor ? doctor?.doctorPic : null);
+  const [updateDoctorPic, { isLoading: isChangingPic }] =
+    useUpdateDoctorPicMutation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (!doctor || !user || user.role !== "doctor") {
       return navigate(-1);
@@ -41,6 +48,42 @@ const DoctorDashboard = () => {
     } else {
       e.target.value = value.replace(/[^0-9+\-()]/g, "");
     }
+  };
+
+  const handleUpload = (file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    return false;
+  };
+
+  const changeDocPic = async () => {
+    try {
+      if (fileList.length < 0) {
+        return message.error("attach a photo");
+      }
+      const formData = new FormData();
+
+      fileList.forEach((file) => {
+        formData.append("files", file.originFileObj);
+      });
+      const res = await updateDoctorPic(formData).unwrap();
+      const data = res;
+      dispatch(trackUser(data.user));
+      message.success(data.msg);
+    } catch (error) {
+      message.error(error.data.msg);
+      console.log(error);
+      setImageUrl(doctor ? doctor?.doctorPic : null);
+    }
+  };
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList.slice(-1));
+    changeDocPic();
   };
 
   const onFinnish = async (values) => {
@@ -117,7 +160,23 @@ const DoctorDashboard = () => {
           {tab === "tab1" && (
             <div className="mt-[40px]">
               <div className="flex gap-[20px] flex-wrap">
-                <Avatar src={doctor?.doctorPic} size={170} shape="square" />
+                <div className="flex flex-col gap-[10px]">
+                  <Avatar src={imageUrl} size={170} shape="square" />
+                  {!doctor?.doctorPic ||
+                    (imageUrl && (
+                      <Upload
+                        showUploadList={false}
+                        beforeUpload={handleUpload}
+                        onChange={onChange}
+                        disabled={isChangingPic || doctor?.doctorPic}
+                        accept=".png,.jpg,.jpeg"
+                      >
+                        <p className="text-[18px] outfit-small cursor-pointer underline">
+                          Upload Picture
+                        </p>
+                      </Upload>
+                    ))}
+                </div>
                 <div>
                   <h3 className="outfit-medium text-[20px] my-[6px]  text-[#3c3b3bab]">
                     <span className="text-[black] outfit-small">Name: </span>
