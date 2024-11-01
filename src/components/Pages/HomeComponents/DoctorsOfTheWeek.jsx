@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const DoctorsOfTheWeek = () => {
   const doctorsOfTheWeek = useSelector((state) => state.AdminReducer.doctors);
-
+  const user = useSelector((state) => state.AppReducer.user);
   return (
     <div className="mt-[70px]">
       <div>
@@ -73,7 +73,10 @@ const DoctorsOfTheWeek = () => {
                 Book Appointment <br /> with Over 100+ Doctors
               </h3>
               <div className="w-full flex justify-center md:justify-start">
-                <button className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center">
+                <button
+                  disabled={user ? true : false}
+                  className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center"
+                >
                   <Link to={"/register"}>create account</Link>
                 </button>
               </div>
