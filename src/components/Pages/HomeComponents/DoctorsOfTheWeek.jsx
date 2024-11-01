@@ -17,7 +17,7 @@ const DoctorsOfTheWeek = () => {
         {doctorsOfTheWeek.length && (
           <div className="flex gap-[20px] flex-wrap justify-center">
             {doctorsOfTheWeek
-              .filter((doc) => doc._id !== user?._id)
+              .filter((doc) => doc.status === "Available")
               .slice(0, 6)
               .map((doc) => (
                 <div key={doc._id} className="bg-white w-[210px] h-fit">
