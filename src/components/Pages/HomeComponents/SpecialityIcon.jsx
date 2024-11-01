@@ -45,7 +45,7 @@ const SpecialityIcon = () => {
       <div>
         <div className="flex flex-col items-center">
           <h3 className="outfit-medium text-[27px] leading-[20px] text-center ">
-            Find by Speciality
+            Find by Specialty
           </h3>
           <p className="text-[18px] md:w-[500px] text-center my-[10px]">
             Simply browse our list of tranied and skilled doctors to book an

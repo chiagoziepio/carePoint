@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const DoctorsOfTheWeek = () => {
   const doctorsOfTheWeek = useSelector((state) => state.AdminReducer.doctors);
-  const user = useSelector((state) => state.AppReducer.user);
+
   return (
     <div className="mt-[70px]">
       <div>
