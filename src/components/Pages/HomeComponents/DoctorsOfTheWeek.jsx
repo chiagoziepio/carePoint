@@ -74,7 +74,7 @@ const DoctorsOfTheWeek = () => {
               </h3>
               <div className="w-full flex justify-center md:justify-start">
                 <button
-                  disabled={user ? true : false}
+                  disabled={user !== null}
                   className="w-fit hover:rounded-none transition-rounded ease-in duration-700 h-fit p-[10px] rounded-[40px] bg-white flex gap-x-[10px] items-center justify-center"
                 >
                   <Link to={"/register"}>create account</Link>
